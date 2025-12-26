@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Workout.BottomNavMenu"
+             x:Name="this">
+    <Grid VerticalOptions="End"
+          HorizontalOptions="FillAndExpand"
+          HeightRequest="70"
+          BackgroundColor="IndianRed">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        
+        <Frame x:Name="Slot1Frame" CornerRadius="50" BackgroundColor="IndianRed" Padding="10" Grid.Column="0" BorderColor="Transparent" HeightRequest="50">
+            <StackLayout x:Name="Slot1Stack" Style="{StaticResource TabStyle}" HeightRequest="50">
+                <Image Source="{Binding Source={x:Reference this}, Path=Icon1}" HeightRequest="30" />
+                <Label Text="{Binding Source={x:Reference this}, Path=Text1}" Style="{StaticResource NavLabelStyle}" HorizontalTextAlignment="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSlot1Tapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame x:Name="Slot2Frame" CornerRadius="50" BackgroundColor="IndianRed" Padding="10" Grid.Column="1" BorderColor="Transparent" HeightRequest="50">
+            <StackLayout x:Name="Slot2Stack" Style="{StaticResource TabStyle}" HeightRequest="50">
+                <Image Source="{Binding Source={x:Reference this}, Path=Icon2}" HeightRequest="30" />
+                <Label Text="{Binding Source={x:Reference this}, Path=Text2}" Style="{StaticResource NavLabelStyle}" HorizontalTextAlignment="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSlot2Tapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame x:Name="Slot3Frame" CornerRadius="50" BackgroundColor="IndianRed" Padding="10" Grid.Column="2" BorderColor="Transparent" HeightRequest="50">
+            <StackLayout x:Name="Slot3Stack" Style="{StaticResource HomeTabStyle}" HeightRequest="50">
+                <Image Source="{Binding Source={x:Reference this}, Path=Icon3}" HeightRequest="30" />
+                <Label Text="{Binding Source={x:Reference this}, Path=Text3}" Style="{StaticResource NavLabelStyle}" HorizontalTextAlignment="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSlot3Tapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame x:Name="Slot4Frame" CornerRadius="50" BackgroundColor="IndianRed" Padding="10" Grid.Column="3" BorderColor="Transparent" HeightRequest="50">
+            <StackLayout x:Name="Slot4Stack" Style="{StaticResource TabStyle}" HeightRequest="50">
+                <Image Source="{Binding Source={x:Reference this}, Path=Icon4}" HeightRequest="30" />
+                <Label Text="{Binding Source={x:Reference this}, Path=Text4}" Style="{StaticResource NavLabelStyle}" HorizontalTextAlignment="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSlot4Tapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+
+        <Frame x:Name="Slot5Frame" CornerRadius="50" BackgroundColor="IndianRed" Padding="10" Grid.Column="4" BorderColor="Transparent" HeightRequest="50">
+            <StackLayout x:Name="Slot5Stack" Style="{StaticResource TabStyle}" HeightRequest="50">
+                <Image Source="{Binding Source={x:Reference this}, Path=Icon5}" HeightRequest="30" />
+                <Label Text="{Binding Source={x:Reference this}, Path=Text5}" Style="{StaticResource NavLabelStyle}" HorizontalTextAlignment="Center"/>
+                <StackLayout.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="OnSlot5Tapped"/>
+                </StackLayout.GestureRecognizers>
+            </StackLayout>
+        </Frame>
+    </Grid>
+</ContentView>

@@ -1,0 +1,26 @@
+1. Megcsinálni az alapját, a fő mehanikát, meg az alap dizájnt
+2. Utánna nézni videokat, tanulni, és megcsinálni még jobban smoot-abban mindent
+3. kijavitani a főlirt hibákat
+
+Legvégén megcsinálni:
+
+Le hash-elni (kodolni) majd a passwordoket és ugy menteni az adatbázisba
+
+ne lehessen kettő ugyan olyan emailcimet csinálni (Userként meg Edzőként lehet ugyan olyan, annyi ha ugyan azt a jelszót adja meg akkor userként nem tud majd bejelentkezni)
+
+privacy plocie
+
+három gomb hogy könnyü, közepes,nehéz volt, és az alapján mentse el is hogy melyikre ment rá ha ráment valamelyikre meg valamennyi százalékban modositsa is a következő napos edzéseke
+
+Animáciok berakása megprobálása, megcsinálása: https://www.pinterest.com/pin/864972672152322290/  ,  vagas: https://ezgif.com/maker/ezgif-2-797b2e63e1-gif-im/ezgif-2-797b2e63e1.gif
+
+Ha van Useres meg edzős accountja is(ugyan a az emailcimük) akkor a jelszó megváltoztatás csak a userre müködik
+
+
+
+
+
+
+
+
+

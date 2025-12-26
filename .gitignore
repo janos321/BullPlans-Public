@@ -1,0 +1,18 @@
+# Visual Studio
+.vs/
+
+# Kliens függőségek
+bin/
+obj/
+
+# NuGet
+*.nuget.g.props
+*.nuget.g.targets
+*.assets.json
+*.nuget.cache
+
+# Adatbázis fájlok
+*.dbmdl
+
+*.user
+launchSettings.json

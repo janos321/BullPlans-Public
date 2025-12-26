@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Workout.TrainerPage"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             xmlns:controls="clr-namespace:Workout"
+             >
+
+    <ContentPage.Resources>
+        <Style x:Key="ArrowButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="Padding" Value="10" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="WidthRequest" Value="50" />
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="BorderColor" Value="Black" />
+            <Setter Property="BorderWidth" Value="1" />
+        </Style>
+
+
+        <!-- Frame Style -->
+        <Style x:Key="ajanlatCimStyleFrame" TargetType="Frame">
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="BackgroundColor" Value="#FAFAFA"/>
+            <Setter Property="BorderColor" Value="#CD5C5C"/>
+            <Setter Property="HasShadow" Value="False"/>
+            <Setter Property="Margin" Value="8,5"/>
+            <Setter Property="VerticalOptions" Value="Start"/>
+            <!-- Allow vertical growth -->
+            <Setter Property="HorizontalOptions" Value="FillAndExpand"/>
+            <!-- Ensure it can expand -->
+        </Style>
+
+        <!-- Entry Style -->
+        <Style x:Key="ajanlatCimStyle" TargetType="Entry">
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontSize" Value="Large"/>
+            <Setter Property="TextColor" Value="#8B4513"/>
+            <Setter Property="HorizontalTextAlignment" Value="Center"/>
+            <Setter Property="PlaceholderColor" Value="#BDC3C7"/>
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="VerticalTextAlignment" Value="Center"/>
+            <Setter Property="Margin" Value="0"/>
+            <!-- Allow Entry to grow with text -->
+        </Style>
+
+
+
+
+        <Style x:Key="ProfilBaseLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="IndianRed"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style x:Key="ProfilHeaderLabelStyle" TargetType="Label" BasedOn="{StaticResource ProfilBaseLabelStyle}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="IndianRed"/>
+        </Style>
+        <Style x:Key="ProfileButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="IndianRed"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+        <Style x:Key="TabStyle" TargetType="StackLayout">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Spacing" Value="2" />
+            <Setter Property="WidthRequest" Value="50" />
+        </Style>
+
+        <Style x:Key="HomeTabStyle" TargetType="StackLayout" BasedOn="{StaticResource TabStyle}">
+            <Setter Property="WidthRequest" Value="60" />
+            <Setter Property="Spacing" Value="-5" />
+        </Style>
+        <Style x:Key="CustomFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="HasShadow" Value="True" />
+            <Setter Property="Shadow">
+                <Setter.Value>
+                    <Shadow Brush="Black" Offset="5,5" Opacity="0.3" Radius="10" />
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="ResultNameLabelStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="25" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Margin" Value="5,5,5,-10" />
+        </Style>
+        <Style x:Key="ResultDescriptionLabelStyle" TargetType="Editor">
+            <Setter Property="TextColor" Value="Gray" />
+            <Setter Property="FontSize" Value="Small" />
+            <Setter Property="Margin" Value="5" />
+            <Setter Property="HeightRequest" Value="120" />
+        </Style>
+        <Style x:Key="CustomEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="PlaceholderColor" Value="Gray" />
+        </Style>
+        <Style x:Key="CustomEntryLongStyle" TargetType="Editor">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="HeightRequest" Value="100" />
+            <Setter Property="PlaceholderColor" Value="Gray" />
+        </Style>
+        <Style x:Key="OKButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Red" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="Margin" Value="10,10" />
+            <Setter Property="Padding" Value="10,10" />
+            <Setter Property="HeightRequest" Value="70" />
+            <Setter Property="WidthRequest" Value="150" />
+            <Setter Property="Shadow">
+                <Shadow Brush="Black" Offset="0,5" Opacity="0.5" Radius="10" />
+            </Setter>
+        </Style>
+        <Style x:Key="kerdesOldalSzerkesztesGomb" TargetType="Button">
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                        <GradientStop Color="#FF512F" Offset="0" />
+                        <GradientStop Color="#DD2476" Offset="1" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="Margin" Value="12,12" />
+            <Setter Property="Padding" Value="15,12" />
+            <Setter Property="HeightRequest" Value="55" />
+            <Setter Property="Shadow">
+                <Shadow Brush="#80000000" Offset="0,10" Opacity="0.6" Radius="15" />
+            </Setter>
+            <Setter Property="FontAttributes" Value="Bold" />
+        </Style>
+        <Style x:Key="CustomButtonStyleMegse" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="TextColor" Value="Red" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="CornerRadius" Value="10" />
+            <Setter Property="Margin" Value="10,10" />
+            <Setter Property="Padding" Value="15,10" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="BorderColor" Value="Black" />
+            <Setter Property="BorderWidth" Value="2" />
+            <Setter Property="Shadow">
+                <Shadow Brush="Black" Offset="0,5" Opacity="0.3" Radius="5" />
+            </Setter>
+        </Style>
+
+
+        <Style x:Key="CustomIdEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="BackgroundColor" Value="White" />
+            <Setter Property="FontSize" Value="16" />
+            <Setter Property="Margin" Value="0,5" />
+            <Setter Property="HeightRequest" Value="40" />
+            <Setter Property="PlaceholderColor" Value="Gray" />
+        </Style>
+        <Style x:Key="DataEntryFrameStyle" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#ffffff" />
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="BorderColor" Value="#eeeeee" />
+            <Setter Property="Margin" Value="10,-10,10,20" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+
+        <Style x:Key="MainDataEntryFrameStyle" TargetType="Frame" BasedOn="{StaticResource DataEntryFrameStyle}">
+            <Setter Property="BackgroundColor" Value="IndianRed" />
+            <Setter Property="CornerRadius" Value="15" />
+            <Setter Property="BorderColor" Value="Red" />
+            <Setter Property="Margin" Value="10,-10,10,20" />
+            <Setter Property="Padding" Value="10" />
+        </Style>
+
+
+
+        <Style x:Key="WeekButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#FFFFFF"/>
+            <Setter Property="TextColor" Value="#000000"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <!-- Selected Week Button Style -->
+        <Style x:Key="SelectedWeekButtonStyle" TargetType="Button" BasedOn="{StaticResource WeekButtonStyle}">
+            <Setter Property="BackgroundColor" Value="#FF6347"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+
+        <!-- Day Button Style -->
+        <Style x:Key="DayButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#FFFFFF"/>
+            <Setter Property="TextColor" Value="#000000"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="WidthRequest" Value="40"/>
+            <Setter Property="Margin" Value="3"/>
+        </Style>
+
+        <!-- Selected Day Button Style -->
+        <Style x:Key="SelectedDayButtonStyle" TargetType="Button" BasedOn="{StaticResource DayButtonStyle}">
+            <Setter Property="BackgroundColor" Value="#FF6347"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="MainTervSendButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Red"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="#000000"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="HeightRequest" Value="60"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="BorderColor" Value="#000000"/>
+        </Style>
+
+        <!-- Back Button Style -->
+        <Style x:Key="BackButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="#FF6347"/>
+            <Setter Property="TextColor" Value="#FFFFFF"/>
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="CornerRadius" Value="15"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="ButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="IndianRed"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="FancySaveButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Red" />
+            <Setter Property="TextColor" Value="White" />
+            <Setter Property="CornerRadius" Value="25" />
+            <Setter Property="HeightRequest" Value="50" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="Margin" Value="20,0" />
+        </Style>
+
+        <Style x:Key="HalfWidthEntryStyle" TargetType="Entry">
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="PlaceholderColor" Value="Gray" />
+            <Setter Property="FontFamily" Value="OpenSans-Regular" />
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HeightRequest" Value="45" />
+            <Setter Property="Keyboard" Value="Numeric" />
+            <Setter Property="WidthRequest" Value="150" />
+            <Setter Property="BackgroundColor" Value="#f9f9f9" />
+        </Style>
+
+
+
+
+    </ContentPage.Resources>
+    <Grid x:Name="MainGrid">
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                 AbsoluteLayout.LayoutFlags="All">
+                <Grid>
+
+                    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <VerticalStackLayout Grid.Row="0">
+
+                            <ContentView x:Name="CalendarView" IsVisible="false">
+
+                                <VerticalStackLayout Spacing="20" Padding="20">
+                                    <StackLayout x:Name="traningFajtak" IsVisible="true" Padding="20">
+
+                                    </StackLayout>
+
+                                    <StackLayout x:Name="TrainDatasBovites" IsVisible="false" Padding="20">
+
+                                        <Frame BackgroundColor="#444444" CornerRadius="30" WidthRequest="40" HeightRequest="40" Margin="-22,-30,0,20" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="megseBackButton" NumberOfTapsRequired="1"/>
+                                            </Frame.GestureRecognizers>
+                                            <Image Source="back_arrow.png" Aspect="AspectFit" WidthRequest="35" HeightRequest="35" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </Frame>
+
+
+                                        <Frame Style="{StaticResource MainDataEntryFrameStyle}">
+                                            <StackLayout>
+                                                <Label Text="id fajta Train Data" TextColor="white" FontSize="Small"/>
+                                                <Entry x:Name="idFajtatTrainData" Placeholder="Pl.: planch1" TextColor="white" FontFamily="OpenSans-Regular" FontSize="18" HeightRequest="50" Keyboard="Default" PlaceholderColor="White"/>
+                                            </StackLayout>
+                                        </Frame>
+
+
+                                        <!-- Animáció Elérés -->
+                                        <Button x:Name="AnimacioEleresEntry" Text="Ad meg a képet" Style="{StaticResource FancySaveButtonStyle}" Clicked="PicChoose" Margin="20"/>
+
+                                        <!-- Név -->
+                                        <Frame Style="{StaticResource DataEntryFrameStyle}">
+                                            <StackLayout>
+                                                <Label Text="Név" TextColor="Gray" FontSize="Small"/>
+                                                <Entry x:Name="NevGYEntryHU" Placeholder="Pl.: Gyakorlat neve" TextColor="Black" FontFamily="OpenSans-Regular" FontSize="18" HeightRequest="45" Keyboard="Default" />
+                                            </StackLayout>
+                                        </Frame>
+
+                                        <!-- Rövid Leírás -->
+                                        <Frame Style="{StaticResource DataEntryFrameStyle}">
+                                            <StackLayout>
+                                                <Label Text="Rövid leírás" TextColor="Gray" FontSize="Small"/>
+                                                <Editor x:Name="RovidLeirasEntryHU" Placeholder="Pl.: Rövid leírás" TextColor="Black" FontFamily="OpenSans-Regular" FontSize="18" HeightRequest="70" Keyboard="Default" />
+                                            </StackLayout>
+                                        </Frame>
+
+                                        <!-- Hosszú Leírás -->
+                                        <Frame Style="{StaticResource DataEntryFrameStyle}">
+                                            <StackLayout>
+                                                <Label Text="Hosszú leírás" TextColor="Gray" FontSize="Small"/>
+                                                <Editor x:Name="HosszuLeirasEntryHU" Placeholder="Pl.: Hosszú leírás" TextColor="Black" FontFamily="OpenSans-Regular" FontSize="18" HeightRequest="90" Keyboard="Default" />
+                                            </StackLayout>
+                                        </Frame>
+
+
+                                        <Button x:Name="MentesTrainDatas" Text="Mentés" Style="{StaticResource ButtonStyle}" Clicked="OnMentesTraindatasButtonClicked"/>
+
+                                    </StackLayout>
+
+                                    <StackLayout x:Name="PicFajtak" IsVisible="false" Padding="20">
+
+                                    </StackLayout>
+
+                                </VerticalStackLayout>
+
+                            </ContentView>
+
+
+                            <ContentView x:Name="ajanlatokView" IsVisible="false">
+                                <StackLayout>
+                                    <StackLayout x:Name="kezdostackLayout">
+                                        <StackLayout x:Name="Edzesajanlatok" IsVisible="true" Margin="0,0,0,70">
+
+                                        </StackLayout>
+
+                                        <Button x:Name="offerAdButton" Text="Ajánlat hozzáadása" IsVisible="true" Clicked="ajanlatHozzaAdasaPanelMegnyitasa" BackgroundColor="Red" TextColor="White" FontAttributes="Bold" CornerRadius="15" Padding="10" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,0,0,150" HeightRequest="60" WidthRequest="250" FontSize="20"/>
+                                    </StackLayout>
+
+                                    <StackLayout x:Name="longDetailPanel" IsVisible="false" Padding="20" Spacing="10">
+
+                                        <Frame CornerRadius="30" Padding="0" BackgroundColor="Transparent" HasShadow="False">
+                                            <StackLayout Padding="20" Spacing="15" BackgroundColor="White">
+                                                <!-- Profilkép rész -->
+                                                <Grid Padding="10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Profilkép balra -->
+                                                    <StackLayout Grid.Column="0">
+                                                        <Image Source="{Binding ProfileImageSource}" HeightRequest="150" WidthRequest="150" Aspect="AspectFill" VerticalOptions="Start" HorizontalOptions="Start">
+                                                            <Image.Clip>
+                                                                <EllipseGeometry Center="75,75" RadiusX="75" RadiusY="75" />
+                                                            </Image.Clip>
+                                                        </Image>
+                                                        <Label x:Name="felhasznaloNeve3" Text="Horvath Janos" FontSize="Large" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Start" />
+                                                    </StackLayout>
+
+                                                    <!-- Fájlok jobbra, a profilkép mellé -->
+                                                    <StackLayout x:Name="informationFileInOfferSettings2" Orientation="Vertical" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Grid.Column="1" Margin="10,0,0,0">
+                                                        <!-- Fájlok jelennek meg itt -->
+                                                    </StackLayout>
+                                                </Grid>
+
+
+                                                <!-- Név és Ár mezők -->
+                                                <Grid ColumnSpacing="10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Név Label (Kimenet) -->
+                                                    <Frame Style="{StaticResource ajanlatCimStyleFrame}" Grid.Column="0">
+                                                        <Label x:Name="NameEntry3" Text="Név" FontAttributes="Bold" FontSize="Large" TextColor="#8B4513" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" />
+                                                    </Frame>
+
+                                                    <!-- Ár Label (Kimenet) -->
+                                                    <Frame Style="{StaticResource ajanlatCimStyleFrame}" Grid.Column="1">
+                                                        <Label x:Name="PriceEntry3" Text="Ár" FontAttributes="Bold" FontSize="Large" TextColor="#8B4513" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" />
+                                                    </Frame>
+                                                </Grid>
+
+                                                <!-- Alap kérdések mezők -->
+                                                <StackLayout x:Name="ajanlatTudniValokLongDetailSatcklayout"  Orientation="Vertical"  HorizontalOptions="Start"  VerticalOptions="Start"  Margin="10,0,0,0">
+                                                </StackLayout>
+
+
+                                                <Grid Grid.Row="3" Margin="20, 10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Button x:Name="backBolt" Grid.Column="0" Text="Vissza" Clicked="BackAjanlatok" BackgroundColor="IndianRed" TextColor="White" CornerRadius="20" WidthRequest="100" HeightRequest="50" HorizontalOptions="Start"/>
+                                                    <Button x:Name="mehetBolt" Grid.Column="2" Text="Mehet" BackgroundColor="Red" TextColor="White" CornerRadius="20" WidthRequest="100" HeightRequest="50" HorizontalOptions="End"/>
+                                                </Grid>
+                                            </StackLayout>
+
+                                        </Frame>
+                                    </StackLayout>
+                                    <StackLayout x:Name="PluszAjanlatBekeres" IsVisible="False" Padding="20" Spacing="10">
+
+                                        <Grid>
+                                            <!-- Profilkép, ami kilóg a konténerből, de nem lesz levágva -->
+                                            <Image Source="{Binding ProfileImageSource}" HorizontalOptions="Center" HeightRequest="150" WidthRequest="150" Aspect="AspectFill" VerticalOptions="Start" Margin="0,-20,0,0" ZIndex="5">
+                                                <Image.Clip>
+                                                    <EllipseGeometry Center="75,75" RadiusX="75" RadiusY="75" />
+                                                </Image.Clip>
+                                            </Image>
+
+
+                                            <!-- Frame, ami alatt a többi tartalom helyezkedik el -->
+                                            <Frame Style="{StaticResource CustomFrameStyle}" Padding="10" CornerRadius="20" BorderColor="Black" VerticalOptions="Start" Margin="0,60,0,0">
+                                                <!-- Ezzel megoldjuk, hogy a profilkép felett legyen hely -->
+                                                <StackLayout Spacing="20" VerticalOptions="Center" Padding="0,70,0,0">
+                                                    <Label x:Name="felhasznaloNeve" Text="Horvath Janos" FontSize="Large" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Start" />
+                                                    <!-- Név és Ár mezők -->
+                                                    <StackLayout HorizontalOptions="Center" VerticalOptions="Center" Spacing="10">
+                                                        <Frame Style="{StaticResource ajanlatCimStyleFrame}">
+                                                            <Entry x:Name="NameEntry" Placeholder="Ajanlat neve" TextChanged="ResulNameTextChanged" Style="{StaticResource ajanlatCimStyle}" />
+                                                        </Frame>
+
+                                                        <!-- Ár mező (max 10 számjegy) és pénznem picker -->
+                                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center" VerticalOptions="Center" Spacing="5">
+                                                            <Entry x:Name="PriceEntry" TextChanged="ResulPricesTextChanged" Placeholder="Ár" FontSize="Medium" TextColor="Black" Keyboard="Numeric" WidthRequest="100" HorizontalTextAlignment="Center" MaxLength="10" />
+                                                            <Picker x:Name="CurrencyPicker" Title="Pénznem" FontSize="Medium" VerticalOptions="Center" TextColor="Black" SelectedIndexChanged="OnCurrencyPickerChanged">
+                                                                <Picker.ItemsSource>
+                                                                    <x:Array Type="{x:Type x:String}">
+                                                                        <x:String>HUF</x:String>
+                                                                        <x:String>USD</x:String>
+                                                                        <x:String>RSD</x:String>
+                                                                        <x:String>EUR</x:String>
+                                                                    </x:Array>
+                                                                </Picker.ItemsSource>
+                                                            </Picker>
+                                                        </StackLayout>
+                                                    </StackLayout>
+
+                                                    <!-- Tag-ek megjelenítési helye -->
+                                                    <FlexLayout x:Name="SelectedTagsLayout" Wrap="Wrap" AlignItems="Center">
+                                                        <!-- Kiválasztott tag-ek jelennek meg itt -->
+                                                    </FlexLayout>
+
+                                                    <!-- Plusz jel a Tag-ek kiválasztásához -->
+                                                    <Button Text="+" FontSize="Large" Clicked="OnTagSelectClicked" HorizontalOptions="Center" BackgroundColor="LightGray" CornerRadius="25" WidthRequest="50" HeightRequest="50"/>
+                                                </StackLayout>
+                                            </Frame>
+                                        </Grid>
+
+
+
+                                        <!-- Popup panel, ahol kiválaszthatóak a tag-ek -->
+                                        <StackLayout x:Name="TagSelectionPanel" IsVisible="False" BackgroundColor="White" Padding="20" Margin="10">
+                                            <Label Text="Válassz Tag-eket (max. 5)" FontAttributes="Bold" FontSize="Medium" />
+                                            <FlexLayout x:Name="AvailableTagsLayout" Wrap="Wrap" AlignItems="Center">
+                                                <!-- Itt jelennek meg a választható tag-ek -->
+                                            </FlexLayout>
+                                            <Button Text="Bezár" Clicked="OnCloseTagSelection" />
+                                        </StackLayout>
+
+
+
+
+
+
+
+
+                                        <BoxView HeightRequest="5" BackgroundColor="Red" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="0,10" />
+
+
+                                        <Frame CornerRadius="30" Padding="0" BackgroundColor="Transparent" HasShadow="False">
+                                            <StackLayout Padding="20" Spacing="15" BackgroundColor="White">
+                                                <!-- Profilkép rész -->
+                                                <Grid Padding="10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Profilkép balra -->
+                                                    <StackLayout Grid.Column="0">
+                                                        <Image Source="{Binding ProfileImageSource}" HeightRequest="150" WidthRequest="150" Aspect="AspectFill" VerticalOptions="Start" HorizontalOptions="Start">
+                                                            <Image.Clip>
+                                                                <EllipseGeometry Center="75,75" RadiusX="75" RadiusY="75" />
+                                                            </Image.Clip>
+                                                        </Image>
+                                                        <Label x:Name="felhasznaloNeve2" Text="Horvath Janos" FontSize="Large" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Start" />
+                                                    </StackLayout>
+
+                                                    <!-- Fájlok jobbra, a profilkép mellé -->
+                                                    <StackLayout x:Name="informationFileInOfferSettings" Orientation="Vertical" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Grid.Column="1" Margin="10,0,0,0">
+                                                        <!-- Fájlok jelennek meg itt -->
+                                                    </StackLayout>
+                                                </Grid>
+
+
+                                                <!-- Név és Ár mezők -->
+                                                <Grid ColumnSpacing="10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Név Label (Kimenet) -->
+                                                    <Frame Style="{StaticResource ajanlatCimStyleFrame}" Grid.Column="0">
+                                                        <Label x:Name="NameEntry2" Text="Név" FontAttributes="Bold" FontSize="Large" TextColor="#8B4513" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" />
+                                                    </Frame>
+
+                                                    <!-- Ár Label (Kimenet) -->
+                                                    <Frame Style="{StaticResource ajanlatCimStyleFrame}" Grid.Column="1">
+                                                        <Label x:Name="PriceEntry2" Text="Ár" FontAttributes="Bold" FontSize="Large" TextColor="#8B4513" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" />
+                                                    </Frame>
+                                                </Grid>
+
+                                                <!-- Alap kérdések mezők -->
+                                                <StackLayout x:Name="alapKerdesekStacklayout" Orientation="Vertical" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Grid.Column="1" Margin="10,0,0,0">
+                                                    <!-- AlpaKerdesek jelennek meg itt -->
+                                                </StackLayout>
+
+                                                <StackLayout x:Name="SelectedTagsLayoutQuestions" HorizontalOptions="Center" Margin="0,0,0,40">
+                                                    <!-- Itt jelennek meg a kiválasztott tag-ek -->
+                                                </StackLayout>
+                                            </StackLayout>
+                                        </Frame>
+
+                                        <BoxView HeightRequest="5" BackgroundColor="Red" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="0,5,0,5" />
+
+                                        <Button x:Name="sideChangeButton" Text="kérdés oldalak szerkesztése" Style="{StaticResource kerdesOldalSzerkesztesGomb}" Clicked="sideCahngeButtonClick"/>
+
+                                        <BoxView HeightRequest="5" BackgroundColor="Red" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="0,5,0,5" />
+
+                                        <Button x:Name="OkFajta" Text="Kész" Style="{StaticResource OKButtonStyle}" Clicked="OkAjanlathozzadas"/>
+
+                                        <Button Text="Mégse" Style="{StaticResource CustomButtonStyleMegse}" Clicked="BackAjanlatok"/>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="false" x:Name="sideChangeStacklayout">
+                                        <StackLayout IsVisible="true" x:Name="questionPart">
+
+                                        </StackLayout>
+
+
+                                        <Grid x:Name="Utility">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Button x:Name="leftArrow" Grid.Column="0" Style="{StaticResource ArrowButtonStyle}" Clicked="leftSide">
+                                                <Button.ImageSource>
+                                                    <FileImageSource File="back_arrow.png" />
+                                                </Button.ImageSource>
+                                            </Button>
+                                            <Button Grid.Column="1" Style="{StaticResource ArrowButtonStyle}" Clicked="SideEdit">
+                                                <Button.ImageSource>
+                                                    <FileImageSource File="editingicon.png" />
+                                                </Button.ImageSource>
+                                            </Button>
+
+                                            <Button Grid.Column="2" Style="{StaticResource ArrowButtonStyle}" Clicked="SideDelete">
+                                                <Button.ImageSource>
+                                                    <FileImageSource File="ximg.png" />
+                                                </Button.ImageSource>
+                                            </Button>
+
+                                            <Button x:Name="rightArrow" Grid.Column="3" Style="{StaticResource ArrowButtonStyle}" Clicked="rightSide"
+                                                        RotationY="180">
+                                                <Button.ImageSource>
+                                                    <FileImageSource File="back_arrow.png" />
+                                                </Button.ImageSource>
+                                            </Button>
+                                        </Grid>
+
+                                        <Button Text="uj oldal hozzáadása" Style="{StaticResource kerdesOldalSzerkesztesGomb}" Clicked="SideAd"/>
+
+                                        <Button Text="OK" Style="{StaticResource OKButtonStyle}" Clicked="sideCahngeOK"/>
+                                    </StackLayout>
+                                    <StackLayout IsVisible="false" x:Name="adSideStacklayout" Padding="20">
+
+                                        <!-- Focim -->
+                                        <Label Text="Főcím" FontSize="18" FontAttributes="Bold" />
+                                        <Entry x:Name="focimEntry" Placeholder="Add meg a főcímet" />
+
+                                        <!-- Fő kérdés -->
+                                        <Label Text="Fő kérdés" FontSize="18" FontAttributes="Bold" Margin="0,20,0,0" />
+                                        <Entry x:Name="fokerdesEntry" Placeholder="Add meg a fő kérdést" />
+
+                                        <!-- Dinamikus kérdéslista -->
+                                        <Label Text="Kérdések" FontSize="18" FontAttributes="Bold" Margin="0,20,0,10" />
+                                        <StackLayout x:Name="kerdesekStack">
+
+                                        </StackLayout>
+                                        <Button Text="+" Clicked="OnAddNewKerdesClicked" HorizontalOptions="Start" />
+
+                                        <!-- Rádiógombok -->
+                                        <Label Text="Válasz típusok" FontSize="18" FontAttributes="Bold" Margin="0,20,0,10" />
+                                        <StackLayout>
+                                            <RadioButton x:Name="tobbvalasztosRadio" Content="Többválasztós" GroupName="valaszTipus" />
+                                            <RadioButton x:Name="egyvalasztosRadio" Content="Egyválasztós" GroupName="valaszTipus" />
+                                            <RadioButton x:Name="beirosRadio" Content="Beírós" GroupName="valaszTipus" />
+                                        </StackLayout>
+
+                                        <!-- OK gomb -->
+                                        <Button Text="OK" x:Name="okButton" Clicked="SideAdOk" Style="{StaticResource OKButtonStyle}" Margin="0,20,0,0" />
+
+                                    </StackLayout>
+
+                                </StackLayout>
+                            </ContentView>
+
+
+                            <ContentView x:Name="HomeView" IsVisible="true">
+                                <ScrollView>
+                                    <VerticalStackLayout Spacing="20" Padding="20">
+                                        <StackLayout x:Name="vasrlokMegjelenitese" IsVisible="true">
+                                            <!-- Még folyamatban lévő ügyfelek szekció -->
+                                            <Label Text="Folyamatban lévő ügyfelek" FontAttributes="Bold" FontSize="Medium" TextColor="Red"/>
+
+                                            <!-- Aktív ügyfelek -->
+                                            <CollectionView x:Name="ActiveCustomersView" SelectionMode="Single">
+                                                <CollectionView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Frame BorderColor="Red" Padding="10" CornerRadius="15" BackgroundColor="White">
+                                                            <Button Text="{Binding Email}" FontAttributes="Bold" FontSize="Large" BackgroundColor="IndianRed" TextColor="Black" Padding="15"  CornerRadius="10"  Clicked="OnCustomerButtonClicked"/>
+                                                        </Frame>
+                                                    </DataTemplate>
+                                                </CollectionView.ItemTemplate>
+                                            </CollectionView>
+
+                                            <!-- Befejezett ügyfelek szekció -->
+                                            <Label Text="Befejezett ügyfelek" FontAttributes="Bold" FontSize="Medium" TextColor="Green"/>
+
+                                            <!-- Befejezett ügyfelek -->
+                                            <CollectionView x:Name="CompletedCustomersView" SelectionMode="Single">
+                                                <CollectionView.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Frame BorderColor="Black" Padding="10" CornerRadius="15">
+                                                            <Button Text="{Binding Email}" FontAttributes="Bold"  FontSize="Large"  BackgroundColor="LightGreen"  TextColor="Black" Padding="15" CornerRadius="10" Clicked="OnCustomerButtonClicked"/>
+                                                        </Frame>
+                                                    </DataTemplate>
+                                                </CollectionView.ItemTemplate>
+                                            </CollectionView>
+                                        </StackLayout>
+                                        <StackLayout x:Name="vasarloAdatai" IsVisible="false">
+
+                                        </StackLayout>
+                                        <StackLayout x:Name="edzesTervMegtervezese" IsVisible="false">
+                                            <StackLayout x:Name="MainTervOsszerakasa" IsVisible="true" VerticalOptions="StartAndExpand" HorizontalOptions="FillAndExpand" Padding="20,0,20,20">
+
+                                                <!-- Felhasználó neve -->
+                                                <Label x:Name="FelhasznaloNeve" Text="Felhasználó neve" FontSize="24" FontAttributes="Bold" HorizontalOptions="Center" Margin="0,0,0,10">
+                                                    <Label.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="FelhasznaloAdatokMegmuatatasa" />
+                                                    </Label.GestureRecognizers>
+                                                </Label>
+
+                                                <BoxView HeightRequest="2" Color="Red" HorizontalOptions="FillAndExpand" VerticalOptions="Center" WidthRequest="500"/>
+
+                                                <!-- Hetek gombok -->
+                                                <Grid x:Name="WeekGrid" ColumnDefinitions="*,*,*,*" HorizontalOptions="Fill" Margin="0,0,0,10">
+                                                    <Button x:Name="Week1Button" Text="1.het" Grid.Column="0" Style="{StaticResource SelectedWeekButtonStyle}" Clicked="OnWeekButtonClicked"/>
+                                                    <Button x:Name="Week2Button" Text="2.het" Grid.Column="1" Style="{StaticResource WeekButtonStyle}" Clicked="OnWeekButtonClicked"/>
+                                                    <Button x:Name="Week3Button" Text="3.het" Grid.Column="2" Style="{StaticResource WeekButtonStyle}" Clicked="OnWeekButtonClicked"/>
+                                                    <Button x:Name="Week4Button" Text="4.het" Grid.Column="3" Style="{StaticResource WeekButtonStyle}" Clicked="OnWeekButtonClicked"/>
+                                                </Grid>
+
+                                                <!-- Edzés ugyan az mint az 1. héten -->
+                                                <StackLayout x:Name="ElsoHetesCheckBoxStackLayout" IsVisible="False" Orientation="Horizontal" HorizontalOptions="Center" Margin="10">
+                                                    <Label Text="Edzés ugyan az mind az 1. héten?" VerticalOptions="Center" />
+                                                    <CheckBox x:Name="SameAsFirstWeekCheckBox" IsChecked="False" VerticalOptions="Center" CheckedChanged="OnCheckBoxChanged"/>
+                                                </StackLayout>
+
+                                                <!-- Napok gombok -->
+                                                <Grid x:Name="DayGrid" ColumnDefinitions="*,*,*,*,*,*,*" HorizontalOptions="Fill" Margin="0,0,0,20">
+                                                    <Button x:Name="DayHButton" Text="H" Grid.Column="0" Style="{StaticResource SelectedDayButtonStyle}" Clicked="OnDayButtonClicked"/>
+                                                    <Button x:Name="DayKButton" Text="K" Grid.Column="1" Style="{StaticResource DayButtonStyle}" Clicked="OnDayButtonClicked"/>
+                                                    <Button x:Name="DaySZButton" Text="SZ" Grid.Column="2" Style="{StaticResource DayButtonStyle}" Clicked="OnDayButtonClicked"/>
+                                                    <Button x:Name="DayCSButton" Text="CS" Grid.Column="3" Style="{StaticResource DayButtonStyle}" Clicked="OnDayButtonClicked"/>
+                                                    <Button x:Name="DayPButton" Text="P" Grid.Column="4" Style="{StaticResource DayButtonStyle}" Clicked="OnDayButtonClicked"/>
+                                                    <Button x:Name="DaySZOButton" Text="SZO" Grid.Column="5" Style="{StaticResource DayButtonStyle}" Clicked="OnDayButtonClicked"/>
+                                                    <Button x:Name="DayVButton" Text="V" Grid.Column="6" Style="{StaticResource DayButtonStyle}" Clicked="OnDayButtonClicked"/>
+                                                </Grid>
+
+                                                <BoxView HeightRequest="2" Color="Red" HorizontalOptions="FillAndExpand" VerticalOptions="Center" WidthRequest="500"/>
+
+                                                <!-- Edzés gomb -->
+                                                <Frame BackgroundColor="White" CornerRadius="30" Padding="10" Margin="20,10" HorizontalOptions="Center" VerticalOptions="Center" HasShadow="True" WidthRequest="200">
+                                                    <Label Text="Edzés" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TextColor="IndianRed" />
+                                                </Frame>
+                                                <!-- Összefoglaló -->
+                                                <Frame BackgroundColor="White" CornerRadius="15" Margin="5" Padding="10" HasShadow="True" BorderColor="Red">
+                                                    <Editor x:Name="Osszefoglalo" Placeholder="Összefoglaló" TextColor="Black" HeightRequest="120" FontSize="18" TextChanged="Osszefoglalo_TextChanged"/>
+                                                </Frame>
+
+                                                <StackLayout x:Name="EdzesekListaja" Orientation="Vertical" HorizontalOptions="Center" Margin="10">
+
+                                                </StackLayout>
+
+                                                <Button Text="+" Style="{StaticResource ButtonStyle}" Clicked="pluszosAd" WidthRequest="50" HeightRequest="50" CornerRadius="25" HorizontalOptions="Center" VerticalOptions="Center" Margin="7"/>
+
+                                                <BoxView HeightRequest="2" Color="Red" HorizontalOptions="FillAndExpand" VerticalOptions="Center" WidthRequest="500"/>
+
+                                                <!-- Étrend gomb -->
+                                                <Frame BackgroundColor="White" CornerRadius="30" Padding="10" Margin="20,10" HorizontalOptions="Center" VerticalOptions="Center" HasShadow="True" WidthRequest="200">
+                                                    <Label Text="Etrend" FontSize="32" FontAttributes="Bold" HorizontalOptions="Center" VerticalOptions="Center" TextColor="IndianRed" />
+                                                </Frame>
+
+                                                <BoxView HeightRequest="2" Color="Red" HorizontalOptions="FillAndExpand" VerticalOptions="Center" WidthRequest="500"/>
+
+                                                <!-- Küldés gomb -->
+                                                <Button x:Name="KuldesButton" Text="Küldés" Style="{StaticResource MainTervSendButton}" Margin="0,20" Clicked="KuldesButtonClicked"/>
+
+                                                <!-- Vissza gomb -->
+                                                <Button x:Name="BackButton" Text="mentés és kilépés" Style="{StaticResource BackButtonStyle}" Clicked="mentesEsKilepes"/>
+
+                                            </StackLayout>
+
+                                            <StackLayout x:Name="AdatokAFelhasznaloe" IsVisible="false">
+
+                                            </StackLayout>
+
+                                            <StackLayout x:Name="Bovites" IsVisible="false" Padding="20">
+
+                                                <Button x:Name="TorlesButton" Text="Törlés" Clicked="OnTorlesButtonClicked" Margin="5,-20,5,20"/>
+
+                                                <Button x:Name="fajtaIdKOd" Text="Ad meg a fajtat" Style="{StaticResource FancySaveButtonStyle}" Clicked="fajtaIsKodValasztosPanel" Margin="20"/>
+
+                                                <!-- Gyakorlati Idő és Végső Pihenő Idő -->
+                                                <Frame Style="{StaticResource DataEntryFrameStyle}">
+                                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                                        <StackLayout>
+                                                            <Label Text="Gyakorlati idő (sec)" TextColor="Gray" FontSize="Small"/>
+                                                            <Entry x:Name="GyakorlatiIdoEntry" Placeholder="Pl.: 5" Style="{StaticResource HalfWidthEntryStyle}"/>
+                                                        </StackLayout>
+                                                        <StackLayout>
+                                                            <Label Text="Végső pihenő idő (sec)" TextColor="Gray" FontSize="Small"/>
+                                                            <Entry x:Name="VegsoPihenoIdoEntry" Placeholder="Pl.: 30" Style="{StaticResource HalfWidthEntryStyle}"/>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                </Frame>
+
+                                                <!-- Mennyiség és Súly -->
+                                                <Frame Style="{StaticResource DataEntryFrameStyle}">
+                                                    <StackLayout Orientation="Horizontal" HorizontalOptions="FillAndExpand">
+                                                        <StackLayout>
+                                                            <Label Text="Mennyiség" TextColor="Gray" FontSize="Small"/>
+                                                            <Entry x:Name="MennyisegEntry" Placeholder="Pl.: 10" Style="{StaticResource HalfWidthEntryStyle}"/>
+                                                        </StackLayout>
+                                                        <StackLayout>
+                                                            <Label Text="Súly (kg)" TextColor="Gray" FontSize="Small"/>
+                                                            <Entry x:Name="SulyEntry" Placeholder="Pl.: 20" Style="{StaticResource HalfWidthEntryStyle}"/>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                </Frame>
+
+                                                <!-- Mentés Gomb -->
+                                                <Button x:Name="MentesButton" Text="Mentés" Style="{StaticResource ButtonStyle}" Clicked="OnMentesButtonClicked"/>
+
+                                            </StackLayout>
+
+                                            <StackLayout x:Name="TrainDatas" IsVisible="false" Padding="20">
+
+                                            </StackLayout>
+
+                                        </StackLayout>
+                                    </VerticalStackLayout>
+
+                                </ScrollView>
+                            </ContentView>
+
+
+
+
+                            <ContentView x:Name="ProfilView" IsVisible="false">
+                                <ScrollView>
+                                    <StackLayout>
+                                        <StackLayout x:Name="ProfileData" Padding="10" Spacing="5">
+                                            <!-- Profilkép és animáció -->
+                                            <Grid HorizontalOptions="Center" VerticalOptions="Start">
+                                                <!-- Profilkép -->
+                                                <Frame HeightRequest="150" WidthRequest="150" CornerRadius="75" IsClippedToBounds="True" Margin="0,-10,0,0">
+                                                    <Image Source="{Binding ProfileImageSource}" HeightRequest="150" WidthRequest="150" Aspect="AspectFill"/>
+                                                </Frame>
+
+                                                <!-- Plusz jel a fehér körben -->
+                                                <Image Source="pluscircle.png" HeightRequest="40" WidthRequest="40" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,10,0">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnAddPhotoAddTapped"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </Grid>
+
+                                            <!-- Nyelvválasztó Gomb -->
+                                            <Button x:Name="languageButton" Text="Jelenlegi Nyelv" Style="{StaticResource ProfileButtonStyle}" Clicked="OnLanguageButtonClicked"/>
+
+                                            <!-- Név -->
+                                            <Label x:Name="ProfilName" Text="Név: Jane Doe" Style="{StaticResource ProfilHeaderLabelStyle}"/>
+
+                                            <!-- Email Cím -->
+                                            <Label x:Name="ProfilEmail" Text="Email: jane.doe@example.com" Style="{StaticResource ProfilBaseLabelStyle}"/>
+
+                                            <!-- Születési Dátum -->
+                                            <Label x:Name="ProfilDate" Text="Születési Dátum: 1985. Március 15." Style="{StaticResource ProfilBaseLabelStyle}"/>
+
+                                            <Label x:Name="feltoltottAdataokLabel" Text="Feltöltött fájlok:" Style="{StaticResource ProfilBaseLabelStyle}" />
+                                            <StackLayout x:Name="feltoltottAdatok" Spacing="10" />
+
+
+                                            <HorizontalStackLayout x:Name="fajlFeltoloGombok" Spacing="15" IsVisible="True">
+                                                <Button Text="Pick File" Clicked="OnPickFileClicked" HeightRequest="50" WidthRequest="80" />
+                                                <Label x:Name="SelectedFileLabel" Text="No file selected" FontSize="Small" HorizontalOptions="Start" VerticalOptions="Center" WidthRequest="150" LineBreakMode="WordWrap" MaxLines="3" Padding="5"/>
+                                                <Button Text="Upload File" Clicked="OnUploadFileClicked" HeightRequest="50" WidthRequest="80" />
+                                            </HorizontalStackLayout>
+
+
+
+                                            <!-- Egyedi Animációhoz -->
+                                            <BoxView HeightRequest="2" HorizontalOptions="Fill" Margin="0,10"/>
+                                            <Button x:Name="logoutButton" Text="Kijelentkezés" Clicked="Logout" Margin="0,0,0,100"/>
+                                        </StackLayout>
+                                        <StackLayout x:Name="NyelvOpciok" IsVisible="False" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Frame BackgroundColor="Brown" Padding="0" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" Margin="20" HasShadow="True">
+                                                <StackLayout>
+                                                    <!-- Bezáró X gomb a jobb felső sarokban -->
+                                                    <Button Text="X" Clicked="OnLanguageButtonClicked" BackgroundColor="Transparent" TextColor="White" HorizontalOptions="End" Margin="10"/>
+
+                                                    <!-- Nyelvi opciók -->
+                                                    <StackLayout Padding="20" Spacing="10">
+                                                        <Button x:Name="English" Text="English" BackgroundColor="RosyBrown" TextColor="White" Margin="5" Clicked="OnOptionSelected"/>
+                                                        <Button x:Name="Magyar" Text="Magyar" BackgroundColor="RosyBrown" TextColor="White" Margin="5" Clicked="OnOptionSelected"/>
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </Frame>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ScrollView>
+                            </ContentView>
+
+                            
+
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
+            </ScrollView>
+ 
+            <StackLayout x:Name="Alkalmazas" IsVisible="false" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red" Padding="20">
+                <Label Text="Alkalmazás fejlesztés alatt!" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Large" TextColor="White" Margin="0, 20"/>
+                <ActivityIndicator IsRunning="False" Color="Red"/>
+            </StackLayout>
+        </AbsoluteLayout>
+
+        <controls:MessageView x:Name="MessageView" IsVisible="True" />
+        <!-- Alsó navigációs menü -->
+        <controls:BottomNavMenu 
+            x:Name="MyBottomNav"
+            AbsoluteLayout.LayoutBounds="0,1,1,70"
+            AbsoluteLayout.LayoutFlags="WidthProportional, YProportional"
+
+            Icon1="weight_lifter.png"
+            Text1="Feladat"
+            Command1="{Binding CalendarNavCommand}"
+    
+            Icon2="clipboard_text.png"
+            Text2="Ajánlat"
+            Command2="{Binding StatsNavCommand}"
+    
+            Icon3="home.png"
+            Text3="Home"
+            Command3="{Binding HomeNavCommand}"
+    
+            Icon4="profile.png"
+            Text4="Profil"
+            Command4="{Binding ProfileNavCommand}"
+    
+            Icon5="message.png"
+            Text5="Üzenet"
+            Command5="{Binding MessageNavCommand}"
+        />
+        <ContentView x:Name="ForgoKerekP" IsVisible="false" BackgroundColor="Black" Opacity="0.8" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Image x:Name="ForgoKep" Source="leadingcircle.png" WidthRequest="100" HeightRequest="100"/>
+            </StackLayout>
+        </ContentView>
+        
+    </Grid>
+</ContentPage>

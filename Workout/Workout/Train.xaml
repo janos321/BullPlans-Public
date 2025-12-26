@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             x:Class="Workout.Train">
+
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style x:Key="FancyButtonStyle" TargetType="Button">
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="20"/>
+                <Setter Property="HeightRequest" Value="120"/>
+                <Setter Property="WidthRequest" Value="280"/>
+                <Setter Property="CornerRadius" Value="30"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="#99000000" Radius="10" Offset="5,5"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#ff7f50" Offset="0.1"/>
+                            <GradientStop Color="#ff6347" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="InfoFrameStyle" TargetType="Frame">
+                <Setter Property="Padding" Value="10" />
+                <Setter Property="Margin" Value="5" />
+                <Setter Property="CornerRadius" Value="10" />
+                <Setter Property="BackgroundColor" Value="IndianRed" />
+                <Setter Property="HasShadow" Value="True" />
+            </Style>
+
+            <Style x:Key="InfoLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="Margin" Value="5" />
+            </Style>
+
+            <Style x:Key="ButtonStyleEffortLevel" TargetType="Button">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="Padding" Value="10,5"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="IndianRed" Offset="0.1"/>
+                            <GradientStop Color="Red" Offset="1.0"/>
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="Black"
+                            Opacity="0.5"
+                            Offset="5,5"
+                            Radius="10"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="LabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="45"/>
+                <Setter Property="TextColor" Value="IndianRed"/>
+                <Setter Property="HorizontalOptions" Value="Center"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="Margin" Value="40"/>
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="White" Offset="0.1"/>
+                            <GradientStop Color="#FFD700" Offset="1.0"/>
+                            <!-- Arany szín -->
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="Gray"
+                            Opacity="0.8"
+                            Offset="10,10"
+                            Radius="20"/>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+
+    <ScrollView VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+        <Grid>
+
+            <!-- Harom választás: edzes, nyujtas, bemelegites-->
+            <StackLayout x:Name="Options" IsVisible="true" Spacing="3" VerticalOptions="Center" HorizontalOptions="Center">
+                <Frame BackgroundColor="#444444" CornerRadius="20" Padding="0" HorizontalOptions="Start" VerticalOptions="Start" IsClippedToBounds="True" WidthRequest="50" HeightRequest="50" Margin="10">
+                    <Image Source="back_arrow.png" Aspect="AspectFit" HorizontalOptions="Center"  VerticalOptions="Center">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BackMainPage" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Frame>
+                <Button x:Name="WarmUpButton" Text="Bemelegítés" Style="{StaticResource FancyButtonStyle}"/>
+                <Button x:Name="WorkoutButton" Text="Edzés" Style="{StaticResource FancyButtonStyle}" Clicked="TrainOptionsButton"/>
+                <Button x:Name="StretchButton" Text="Nyújtás" Style="{StaticResource FancyButtonStyle}"/>
+            </StackLayout>
+
+
+            <!-- Edzes fajtak amiket mai nap kell megcsinálni -->
+            <AbsoluteLayout x:Name="TrainOptions" IsVisible="false" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1" AbsoluteLayout.LayoutFlags="All">
+                    <StackLayout x:Name="TrainButtons" Spacing="20" VerticalOptions="FillAndExpand" Padding="0,0,0,130">
+                        <!-- Ide kerülnek a dinamikusan generált gombok -->
+                    </StackLayout>
+                </ScrollView>
+
+                <!-- Szürke kör hátterű Frame -->
+                <Frame AbsoluteLayout.LayoutBounds="0,0,40,40" AbsoluteLayout.LayoutFlags="PositionProportional" BackgroundColor="#444444" CornerRadius="20" Padding="0" HorizontalOptions="Start" VerticalOptions="Start" IsClippedToBounds="True">
+                    <Image Source="back_arrow.png" Aspect="AspectFit" HorizontalOptions="Center"  VerticalOptions="Center">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TrainOptionsButton" />
+                        </Image.GestureRecognizers>
+                    </Image>
+                </Frame>
+
+                <StackLayout AbsoluteLayout.LayoutBounds="0,1,1,AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" BackgroundColor="DarkGrey" HorizontalOptions="FillAndExpand" HeightRequest="100">
+                    <Button x:Name="TrainStartButton" Text="Start" Clicked="TrainStartAndBackButton" AbsoluteLayout.LayoutBounds="0,1,1,AutoSize" AbsoluteLayout.LayoutFlags="PositionProportional,WidthProportional" CornerRadius="30" VerticalOptions="Center" HorizontalOptions="Center" WidthRequest="120" HeightRequest="90" Margin="5" Padding="2" FontSize="20" BackgroundColor="Red" />
+                </StackLayout>
+            </AbsoluteLayout>
+
+            <!-- gyakorlatok részletesebb leirásai -->
+            <StackLayout IsVisible="false" x:Name="TrainDetails" Spacing="0" VerticalOptions="FillAndExpand">
+                <Grid x:Name="KepesGrid" VerticalOptions="Start">
+                    <Image x:Name="animationView" Source="alkar_felcsavaras.gif" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsAnimationPlaying="True"/>
+
+                    <Frame BackgroundColor="#444444" CornerRadius="20" Padding="0" HorizontalOptions="Start" VerticalOptions="Start" IsClippedToBounds="True" WidthRequest="50" HeightRequest="50" Margin="10">
+                        <Image Source="back_arrow.png" Aspect="AspectFit" HorizontalOptions="Center"  VerticalOptions="Center">
+                            <Image.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="BackDetails" />
+                            </Image.GestureRecognizers>
+                        </Image>
+                    </Frame>
+
+                    <Label x:Name="nameLabel" Text="Gyakorlat Neve" FontAttributes="Bold" FontSize="20" TextColor="White" BackgroundColor="#AA000000" HorizontalOptions="Start" VerticalOptions="End" Margin="10" Padding="5" />
+                </Grid>
+
+                <!-- Adatok és Leírás további keretekben és stílusos megjelenítéssel -->
+                <Frame BackgroundColor="IndianRed" Padding="10" CornerRadius="10" HasShadow="True" Margin="10">
+                    <Label x:Name="SulyIsmetlesSzam" Text="Súly és ismétlésszám"
+                   TextColor="White"
+                   Margin="5" />
+                </Frame>
+                <Frame BackgroundColor="IndianRed" Padding="10" CornerRadius="10" HasShadow="True" Margin="10">
+                    <Label x:Name="HosszuLeiras"  Text="Részletes leírás itt..."
+                       TextColor="White"
+                       Margin="5" />
+                </Frame>
+            </StackLayout>
+
+            <!-- Edzes -->
+            <StackLayout x:Name="TrainShow" Spacing="10" IsVisible="false">
+
+                <!-- Ezdzes Része az edzésnek -->
+                <StackLayout x:Name="TrainMode" IsVisible="false">
+
+                    <!-- Kép és Vissza Nyíl -->
+                    <Grid x:Name="KepesGrid2" VerticalOptions="Start">
+                        <Image x:Name="animationView2"  Source="bench_press.gif" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsAnimationPlaying="True"/>
+                        <Frame BackgroundColor="#444444" CornerRadius="20" Padding="0" HorizontalOptions="Start" VerticalOptions="Start" IsClippedToBounds="True" WidthRequest="50" HeightRequest="50" Margin="10">
+                            <Image Source="back_arrow.png" Aspect="AspectFit">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TrainStartAndBackButton"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                        <Label x:Name="gyakorlatNev" Text="Gyakorlat Neve" FontAttributes="Bold" FontSize="20" TextColor="White" BackgroundColor="#AA000000" HorizontalOptions="Start" VerticalOptions="End" Margin="10" Padding="5" />
+                    </Grid>
+
+                    <!-- Gyakorlat Név, Mennyiség, Súly, Rövid Leírás -->
+                    <Label x:Name="workLabel" Text="WORK" HorizontalOptions="Center" FontSize="30" Padding="10" HorizontalTextAlignment="Center"/>
+                    <BoxView Color="White" HeightRequest="2" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="0,-8,0,10" />
+                    <Frame BorderColor="Red" BackgroundColor="Transparent" Padding="10" HasShadow="True" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label x:Name="mennyisegSuly" Text="Szükséges súly: 65kg \n asdsd" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </Frame>
+
+                    <!-- Időzítő -->
+                    <VerticalStackLayout>
+                        <skia:SKCanvasView x:Name="canvasView2"
+                           PaintSurface="OnCanvasViewPaintSurface"
+                           HeightRequest="250"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+
+                    <!-- Kezelőgombok -->
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Button x:Name="pluszIdo" Text="+10sec" Clicked="Plus" BackgroundColor="IndianRed" Padding="15" FontAttributes="Bold" TextColor="White" CornerRadius="20" HeightRequest="50" WidthRequest="100" Margin="10"/>
+                        <Button x:Name="koevtkezoGyakorlat" Text="Mehet" Clicked="Skip" BackgroundColor="IndianRed" FontAttributes="Bold" TextColor="White" CornerRadius="20" HeightRequest="50" WidthRequest="100" Margin="10"/>
+                    </StackLayout>
+                </StackLayout>
+
+                <!-- Pihenés része az edzésnek -->
+                <StackLayout x:Name="SlajMode" IsVisible="false">
+                    <Grid x:Name="KepesGrid3" VerticalOptions="Start">
+                        <Image x:Name="animationView3" Source="bench_press.gif" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand" IsAnimationPlaying="True"/>
+                        <Frame BackgroundColor="#444444" CornerRadius="20" Padding="0" HorizontalOptions="Start" VerticalOptions="Start" IsClippedToBounds="True" WidthRequest="50" HeightRequest="50" Margin="10">
+                            <Image Source="back_arrow.png" Aspect="AspectFit">
+                                <Image.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="TrainStartAndBackButton"/>
+                                </Image.GestureRecognizers>
+                            </Image>
+                        </Frame>
+                        <Label x:Name="gyakorlatNev3" Text="Gyakorlat Neve" FontAttributes="Bold" FontSize="20" TextColor="White" BackgroundColor="#AA000000" HorizontalOptions="Start" VerticalOptions="End" Margin="10" Padding="5" />
+                    </Grid>
+
+                    <Label x:Name="phenesLabel" Text="PIHENÉS" HorizontalOptions="Center" FontSize="30" Padding="10" HorizontalTextAlignment="Center"/>
+                    <BoxView Color="White" HeightRequest="2" HorizontalOptions="FillAndExpand" VerticalOptions="Center" Margin="0,-8,0,10" />
+
+                    <!-- Gyakorlat Név, Mennyiség, Súly, Rövid Leírás -->
+                    <Frame BorderColor="Red" BackgroundColor="Transparent" Padding="10" HasShadow="True" HorizontalOptions="Center" VerticalOptions="Center">
+                        <Label x:Name="mennyisegSuly3" Text="Szükséges súly: 65kg \n asdsd" FontSize="25" HorizontalOptions="Center" VerticalOptions="Center" HorizontalTextAlignment="Center"/>
+                    </Frame>
+                    <!-- Időzítő -->
+                    <VerticalStackLayout>
+                        <skia:SKCanvasView x:Name="canvasView"
+                           PaintSurface="OnCanvasViewPaintSurface"
+                           HeightRequest="250"
+                           VerticalOptions="FillAndExpand"
+                           HorizontalOptions="FillAndExpand"/>
+                    </VerticalStackLayout>
+
+                    <!-- Gombok a képernyő alján -->
+                    <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                        <Button x:Name="pluszIdo2" Text="+10sec" Clicked="Plus" BackgroundColor="IndianRed" Padding="15" FontAttributes="Bold" TextColor="White" CornerRadius="20" HeightRequest="50" WidthRequest="100" Margin="10"/>
+                        <Button x:Name="koevtkezoGyakorlat2" Text="Mehet" Clicked="Skip" BackgroundColor="IndianRed" FontAttributes="Bold" TextColor="White" CornerRadius="20" HeightRequest="50" WidthRequest="100" Margin="10"/>
+                    </StackLayout>
+
+
+                    <Label x:Name="shotDetailLabel" Text="Rövid leirás:" HorizontalOptions="Center" FontSize="25" Padding="0,20,0,-4" TextDecorations="Underline" HorizontalTextAlignment="Center"/>
+                    <Label x:Name="rovidLeiras3" Text="1. Elrendezési Problé mák Először elle nőrizzük,  hogy a külső StackLayout (SlajM ode) és a Grid beállításai helyesek-e . Biztosítani kell, hogy a külső StackLayout (SlajMode) ne korlátozza a Grid-et úgy, hogy az nem tud kibővülni a teljes képernyőre. 2. A IsVisible Tulajdonság Mivel a SlajMode StackLayout IsVisible tulajdonsága false, ezért semmi sem jelenik meg ebben az elrendezésben. Ellenőrizd, hogy ez a tulajdonság programozottan megváltozik-e a megfelelő időben, hogy láthatóvá váljon. 3. A VerticalOptions Beállítások A Grid VerticalOptions-a legyen FillAndExpand, ami azt jelenti, hogy a Grid kiterjed az elérhető vertikális területen. Ellenőrizd, hogy ez a beállítás helyesen van-e alkalmazva. 4. A HeightRequest Beállítások Ellenőrizd, hogy a belső tartalom (StackLayout a Grid.Row=-ban) nem foglal-e túl sok helyet, aminek következtében a gombok nem férnek el.  Javított kód Íme a javított kód, ahol biztosítom, hogy a SlajMode látható legyen, és a Grid megfelelően van-e konfigurálva:" 
+                                   FontSize="15" Padding="10" HorizontalOptions="Center" VerticalOptions="Center" VerticalTextAlignment="Center" HorizontalTextAlignment="Center"/>
+                </StackLayout>
+
+            </StackLayout>
+
+            <AbsoluteLayout>
+                
+                <skia:SKCanvasView x:Name="canvasViewKonfetti" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All"
+                           PaintSurface="OnCanvasViewPaintSurface2"/>
+                
+                <StackLayout x:Name="CongratulationPanel" IsVisible="false" Padding="20"
+                     VerticalOptions="Center" HorizontalOptions="Center"
+                     AbsoluteLayout.LayoutBounds="0.5, 0.5, -1, -1"
+                     AbsoluteLayout.LayoutFlags="PositionProportional">
+
+                    <Label x:Name="CongratulationLabel" Text="Gratulálunk" Style="{StaticResource LabelStyle}" 
+                   HorizontalOptions="Center" VerticalOptions="Center"/>
+
+                    <Grid HorizontalOptions="Center" VerticalOptions="Center">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Button x:Name="easyButton" Text="Könnyű" Style="{StaticResource ButtonStyleEffortLevel}"
+                        Clicked="OnButtonClicked" Grid.Column="0" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Button x:Name="mediumButton" Text="Közepes" Style="{StaticResource ButtonStyleEffortLevel}"
+                        Clicked="OnButtonClicked" Grid.Column="1" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Button x:Name="hardButton" Text="Nehéz" Style="{StaticResource ButtonStyleEffortLevel}"
+                        Clicked="OnButtonClicked" Grid.Column="2" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Grid>
+                </StackLayout>
+            </AbsoluteLayout>
+        </Grid>
+
+    </ScrollView>
+
+</ContentPage>

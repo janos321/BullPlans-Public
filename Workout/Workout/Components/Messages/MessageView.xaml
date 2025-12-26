@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentView xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:converters="clr-namespace:Workout.Properties.Converters"
+             xmlns:local="clr-namespace:Workout"
+             x:Class="Workout.MessageView">
+    <ContentView.Resources>
+        <converters:BoolToAlignmentConverter x:Key="AlignmentConverter" />
+        <converters:BoolToBubbleColorConverter x:Key="BubbleColorConverter" />
+        <converters:BubbleRadiusConverter x:Key="BubbleRadiusConverter" />
+        <converters:BubblePaddingConverter x:Key="BubblePaddingConverter" />
+    </ContentView.Resources>
+
+    <Grid>
+        <CollectionView x:Name="messageCustomersView" SelectionMode="Single" IsVisible="True" Margin="20">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame BorderColor="Red" Padding="10" CornerRadius="15" BackgroundColor="White">
+                        <Button Text="{Binding .}" FontAttributes="Bold" FontSize="Large" BackgroundColor="IndianRed" TextColor="Black" Padding="15"  CornerRadius="10"  Clicked="OnMessageCustomerButtonClicked"/>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+
+        <ContentView x:Name="messagePanel" IsVisible="false">
+            <Grid RowSpacing="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <StackLayout Grid.Row="0" BackgroundColor="Red" Orientation="Horizontal" Padding="10">
+
+                    <Image Source="back_arrow.png" HeightRequest="30"
+                           WidthRequest="30"
+                           VerticalOptions="Center"
+                           Margin="0, 0, 10, 0">
+                        <Image.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="BackMessage"/>
+                        </Image.GestureRecognizers>
+                    </Image>
+
+                    <Label x:Name="UserName" Text="User Name" TextColor="White" VerticalOptions="Center" FontAttributes="Bold" FontSize="Large"/>
+                    <StackLayout HorizontalOptions="FillAndExpand"></StackLayout>
+                </StackLayout>
+
+
+                <!-- Beszélgetések gördíthető területe -->
+                <RefreshView x:Name="Rv" Refreshing="OnRefresh" Grid.Row="1">
+                    <CollectionView x:Name="MessagesCollectionView" ItemsSource="{Binding Messages}">
+                        <CollectionView.ItemsLayout>
+                            <LinearItemsLayout Orientation="Vertical"/>
+                        </CollectionView.ItemsLayout>
+
+                        <CollectionView.ItemTemplate>
+                            <DataTemplate x:DataType="local:ChatMessage">
+                                <StackLayout Padding="{Binding ., Converter={StaticResource BubblePaddingConverter}}"
+                                             HorizontalOptions="{Binding IsSentByUser, Converter={StaticResource AlignmentConverter}}">
+
+                                    <Border Padding="9,6"
+                                            MaximumWidthRequest="260"
+                                            BackgroundColor="{Binding IsSentByUser, Converter={StaticResource BubbleColorConverter}}"
+                                            Stroke="Black">
+
+                                        <Border.StrokeShape>
+                                            <Binding Path="." Converter="{StaticResource BubbleRadiusConverter}" />
+                                        </Border.StrokeShape>
+
+                                        <Label Text="{Binding Text}" TextColor="White" LineHeight="1.1" />
+                                    </Border>
+
+                                </StackLayout>
+                            </DataTemplate>
+                        </CollectionView.ItemTemplate>
+                    </CollectionView>
+                </RefreshView>
+
+                <!-- Üzenetíró rész -->
+                <StackLayout Grid.Row="2" VerticalOptions="EndAndExpand" BackgroundColor="#F5F5F5" Padding="10" HorizontalOptions="FillAndExpand">
+                    <Grid ColumnSpacing="10">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Editor x:Name="messageEntry" Placeholder="Írj üzenetet..." AutoSize="TextChanges" TextColor="Black" HorizontalOptions="FillAndExpand" HeightRequest="40" Grid.Column="0"/>
+
+                        <ImageButton Grid.Column="1" 
+                                     x:Name="SendButton" 
+                                     Source="send_icon.png" Clicked="SendMessage"
+                                     BackgroundColor="Transparent"
+                                     HeightRequest="35"
+                                     WidthRequest="35"
+                                     VerticalOptions="Center" />
+
+                    </Grid>
+                </StackLayout>
+            </Grid>
+        </ContentView>
+    </Grid>
+</ContentView>

@@ -1,0 +1,15 @@
+A lokáciot bekérni a felhasználotol, vagy olyat hogy dobjon ki értesitest hogy elfogadja-e hogy az alkalmazás használj a lokáciot
+Ezzel azt csinálni, hogy ajánlunk kondi helyet vagy street workout parkokat, szoval a mi véleményünk szerint a legjobbat
+ezzel sponzort is simán tudunk szerezni, meg esetleg csinálni az alkalmazába térképet és bejelölve hogy hol hányszor volt edzeni meg ilyenek, ez a statisztika legalján
+
+A nyelv állitodjon be ugy hogy ha magyar a play áruhaázza akkor alapértelmezett magyar legyen, ha más akkor angol
+
+Videokat csinálni az étel elkészitéséhez
+
+Értesitesek megcsinálása, például lett uj kedvezmény, vagy akcio, vagy kapott üzenetet
+
+Az uzenetes mennyen automatikusan amire már válaszoltunk (mesterséges intelegencia válaszolás)
+
+Kedvenc zenét bekérni, és hasonlo zenéket fog engedni, persze ezt bármikor ki tudja kapcsolni
+
+A kérdések végén legyen olyan hogy bekér ilyen különleges problémát betegséget, stb, ebben az esetben hosszabb időd vesz igényben és mi hozzuk létre nem a gép

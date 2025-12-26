@@ -1,0 +1,441 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:Workout"
+             x:Class="Workout.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <!-- Itt vannak a közvetlenül definiált stílusok -->
+            <Style x:Key="AdministratorButton" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="IndianRed"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="CornerRadius" Value="30"/>
+                <Setter Property="HeightRequest" Value="60"/>
+                <Setter Property="WidthRequest" Value="220"/>
+                <Setter Property="Margin" Value="10"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="15"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="BorderColor" Value="White"/>
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="#88000000" Opacity="0.5" Radius="10" Offset="0,4"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup Name="CommonStates">
+                            <VisualState Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.95"/>
+                                    <Setter Property="BackgroundColor" Value="#D32F2F"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+                <Setter Property="Background">
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#FF512F" Offset="0.0" />
+                        <GradientStop Color="#DD2476" Offset="1.0" />
+                    </LinearGradientBrush>
+                </Setter>
+            </Style>
+
+            <Style x:Key="GyakorlatFajtaGomb" TargetType="Button" BasedOn="{StaticResource AdministratorButton}">
+                <!-- HeightRequest eltávolítása -->
+                <Setter Property="WidthRequest" Value="300"/>
+                <Setter Property="HeightRequest" Value="120"/>
+                <Setter Property="FontSize" Value="35"/>
+            </Style>
+
+
+            <Style x:Key="FajtaGomb" TargetType="Button">
+                <!-- Alap stílus -->
+                <Setter Property="BackgroundColor" Value="#8B0000"/>
+                <!-- Sötétvörös -->
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HeightRequest" Value="120"/>
+                <!-- Magasabb gomb -->
+                <Setter Property="WidthRequest" Value="250"/>
+                <!-- Szélesebb gomb -->
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Padding" Value="10"/>
+                <!-- Kisebb padding -->
+                <Setter Property="Margin" Value="5,5,5,15"/>
+                <!-- Kisebb margo, alul nulla -->
+
+                <!-- Animáció a gomb lenyomásakor -->
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.95"/>
+                                    <Setter Property="BackgroundColor" Value="#A52A2A"/>
+                                    <!-- Világosbarna -->
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+
+                <!-- Keret beállítások -->
+                <Setter Property="BorderWidth" Value="5"/>
+                <Setter Property="BorderColor" Value="#5C4033"/>
+                <!-- Sötét barna -->
+
+
+                <!-- Színátmenet háttér (opcionális) -->
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#8B0000" Offset="0.1"/>
+                            <!-- Sötétvörös -->
+                            <GradientStop Color="#A52A2A" Offset="1.0"/>
+                            <!-- Világosbarna -->
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="ReadyButton" TargetType="Button">
+                <!-- Alap stílus -->
+                <Setter Property="BackgroundColor" Value="#8B0000"/>
+                <!-- Sötétvörös -->
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <!-- Magasabb gomb -->
+                <Setter Property="WidthRequest" Value="280"/>
+                <!-- Szélesebb gomb -->
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Padding" Value="10"/>
+                <!-- Kisebb padding -->
+                <Setter Property="Margin" Value="5,5,5,15"/>
+                <!-- Kisebb margo, alul nulla -->
+
+                <!-- Animáció a gomb lenyomásakor -->
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.95"/>
+                                    <Setter Property="BackgroundColor" Value="#A52A2A"/>
+                                    <!-- Világosbarna -->
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+
+                <!-- Keret beállítások -->
+                <Setter Property="BorderWidth" Value="3"/>
+                <Setter Property="BorderColor" Value="#5C4033"/>
+                <!-- Sötét barna -->
+
+
+                <!-- Színátmenet háttér (opcionális) -->
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#8B0000" Offset="0.1"/>
+                            <!-- Sötétvörös -->
+                            <GradientStop Color="#A52A2A" Offset="1.0"/>
+                            <!-- Világosbarna -->
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="Focim" TargetType="Label">
+                <Setter Property="TextColor" Value="LightCoral"/>
+                <!-- Világos piros szín -->
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <!-- Vastag betűtípus -->
+                <Setter Property="FontSize" Value="22"/>
+                <!-- Nagy betűméret -->
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <!-- Középre igazítás -->
+                <Setter Property="VerticalTextAlignment" Value="Start"/>
+                <!-- Függőleges igazítás felülre -->
+                <Setter Property="Margin" Value="10"/>
+                <!-- Kis térköz a szöveg körül -->
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="6,6,6,6"/>
+            </Style>
+
+            <Style x:Key="Fokerdes" TargetType="Label">
+                <Setter Property="TextColor" Value="LightSalmon"/>
+                <!-- Halványabb piros szín -->
+                <Setter Property="FontAttributes" Value="None"/>
+                <!-- Normál betűstílus -->
+                <Setter Property="FontSize" Value="18"/>
+                <!-- Kis méretű betűk -->
+                <Setter Property="HorizontalTextAlignment" Value="Center"/>
+                <!-- Középre igazítás -->
+                <Setter Property="VerticalTextAlignment" Value="Start"/>
+                <!-- Függőleges igazítás felülre -->
+                <Setter Property="Margin" Value="5"/>
+                <!-- Kis térköz a szöveg körül -->
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="10,10,10,10"/>
+            </Style>
+
+            <Style x:Key="ProgressBackground" TargetType="BoxView">
+                <Setter Property="Color" Value="LightGray"/>
+            </Style>
+
+            <Style x:Key="ProgressForeground" TargetType="BoxView">
+                <Setter Property="Color" Value="IndianRed"/>
+            </Style>
+
+            <Style x:Key="tobbvalasztosButtonStyle" TargetType="Button">
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Margin" Value="5,5,5,5"/>
+                <Setter Property="BackgroundColor" Value="Gray"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HeightRequest" Value="80"/>
+                <Setter Property="WidthRequest" Value="150"/>
+                <Setter Property="FontSize" Value="15"/>
+                <!-- További stílusok -->
+            </Style>
+
+            <Style x:Key="tobbvalasztosButtonPickStyle" TargetType="Button">
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Margin" Value="5,5,5,5"/>
+                <Setter Property="BackgroundColor" Value="Red"/>
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="HeightRequest" Value="80"/>
+                <Setter Property="WidthRequest" Value="150"/>
+                <Setter Property="FontSize" Value="15"/>
+                <!-- További stílusok -->
+            </Style>
+
+            <Style x:Key="tobbvalasztosFrameStyle" TargetType="Frame">
+                <Setter Property="Padding" Value="5"/>
+                <Setter Property="Margin" Value="5,5,5,10"/>
+                <Setter Property="BackgroundColor" Value="#333333"/>
+                <!-- A keret alapszíne -->
+                <Setter Property="CornerRadius" Value="10"/>
+                <!-- További stílusok -->
+            </Style>
+
+            <Style x:Key="ElegantEntryFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#444444"/>
+                <!-- Sötétebb szürke háttér -->
+                <Setter Property="HasShadow" Value="True"/>
+                <Setter Property="CornerRadius" Value="15"/>
+                <!-- Kerekebb lekerekítés -->
+                <Setter Property="BorderColor" Value="Gray"/>
+                <Setter Property="Padding" Value="15"/>
+                <Setter Property="Margin" Value="15,10,15,10"/>
+                <!-- Kisebb felső és alsó margó -->
+                <Setter Property="Shadow">
+                    <Setter.Value>
+                        <Shadow Brush="Black" Opacity="0.3" Radius="15" Offset="5,5"/>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="WidthRequest" Value="350"/>
+                <!-- Szélesebb Frame -->
+            </Style>
+
+            <Style x:Key="ElegantEntryStyle" TargetType="Entry">
+                <Setter Property="WidthRequest" Value="300"/>
+                <!-- Szélesebb Entry -->
+                <Setter Property="HeightRequest" Value="45"/>
+                <!-- Magasabb Entry -->
+                <Setter Property="TextColor" Value="White"/>
+                <!-- Fehér szöveg -->
+                <Setter Property="FontFamily" Value="OpenSans-Regular"/>
+                <Setter Property="FontSize" Value="18"/>
+                <!-- Nagyobb betűméret -->
+                <Setter Property="BackgroundColor" Value="Transparent"/>
+                <Setter Property="Margin" Value="0"/>
+            </Style>
+
+            <Style x:Key="ElegantLabelStyle" TargetType="Label">
+                <Setter Property="TextColor" Value="#aaaaaa"/>
+                <!-- Világosszürke szöveg -->
+                <Setter Property="FontFamily" Value="OpenSans-Regular"/>
+                <Setter Property="FontSize" Value="18"/>
+                <!-- Nagyobb betűméret -->
+                <Setter Property="Margin" Value="0,0,0,5"/>
+                <!-- Kisebb alsó margó -->
+            </Style>
+
+            <Style x:Key="ElegantFrameStyle" TargetType="Frame">
+                <Setter Property="BackgroundColor" Value="#f0f0f0"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="5,5,5,5"/>
+                <Setter Property="BorderColor" Value="LightGray"/>
+                <Setter Property="HasShadow" Value="True"/>
+            </Style>
+
+            <Style x:Key="QuestionLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="18"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="TextColor" Value="#333333"/>
+                <Setter Property="Margin" Value="0,0,0,5"/>
+            </Style>
+
+            <Style x:Key="AnswerLabelStyle" TargetType="Label">
+                <Setter Property="FontSize" Value="16"/>
+                <Setter Property="TextColor" Value="#666666"/>
+                <Setter Property="Margin" Value="0,0,0,10"/>
+            </Style>
+
+
+
+            <Style x:Key="AdminEdzesekGombokFelsorakozasaFancy" TargetType="Button">
+                <Setter Property="BackgroundColor" Value="OrangeRed" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="Margin" Value="5,10" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="Padding" Value="10" />
+            </Style>
+
+
+            <Style x:Key="TrainingButtonStyle" TargetType="Button">
+                <!-- Background and text color -->
+                <Setter Property="BackgroundColor" Value="OrangeRed" />
+                <Setter Property="TextColor" Value="White" />
+                <Setter Property="FontAttributes" Value="Bold" />
+                <Setter Property="FontSize" Value="18" />
+                <Setter Property="HeightRequest" Value="60" />
+                <Setter Property="WidthRequest" Value="300" />
+                <Setter Property="CornerRadius" Value="15" />
+                <Setter Property="Margin" Value="5,10" />
+                <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+                <Setter Property="Padding" Value="10,0,40,0" />
+                <!-- Leave space for the delete button -->
+
+                <!-- Pressed animation -->
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.95"/>
+                                    <Setter Property="BackgroundColor" Value="#FF6347"/>
+                                    <!-- Lighter OrangeRed when pressed -->
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+
+                <!-- Border settings -->
+                <Setter Property="BorderWidth" Value="2"/>
+                <Setter Property="BorderColor" Value="#5C4033"/>
+                <!-- Dark brown border -->
+
+                <!-- Gradient background (optional) -->
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="OrangeRed" Offset="0.1"/>
+                            <GradientStop Color="#FF4500" Offset="1.0"/>
+                            <!-- A deeper orange shade -->
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+            <Style x:Key="AddNewTrainingButtonStyle" TargetType="Button">
+                <!-- Base style -->
+                <Setter Property="BackgroundColor" Value="#8B0000"/>
+                <!-- Dark red -->
+                <Setter Property="TextColor" Value="White"/>
+                <Setter Property="FontAttributes" Value="Bold"/>
+                <Setter Property="FontSize" Value="Large"/>
+                <Setter Property="CornerRadius" Value="10"/>
+                <Setter Property="HeightRequest" Value="50"/>
+                <Setter Property="WidthRequest" Value="280"/>
+                <Setter Property="HorizontalOptions" Value="Fill"/>
+                <Setter Property="VerticalOptions" Value="Center"/>
+                <Setter Property="Padding" Value="10"/>
+                <Setter Property="Margin" Value="5,5,5,15"/>
+
+                <!-- Button press animation -->
+                <Setter Property="VisualStateManager.VisualStateGroups">
+                    <VisualStateGroupList>
+                        <VisualStateGroup x:Name="CommonStates">
+                            <VisualState x:Name="Normal">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="1"/>
+                                </VisualState.Setters>
+                            </VisualState>
+                            <VisualState x:Name="Pressed">
+                                <VisualState.Setters>
+                                    <Setter Property="Scale" Value="0.95"/>
+                                    <Setter Property="BackgroundColor" Value="#A52A2A"/>
+                                    <!-- Lighter red on press -->
+                                </VisualState.Setters>
+                            </VisualState>
+                        </VisualStateGroup>
+                    </VisualStateGroupList>
+                </Setter>
+
+                <!-- Border settings -->
+                <Setter Property="BorderWidth" Value="3"/>
+                <Setter Property="BorderColor" Value="#5C4033"/>
+                <!-- Dark brown -->
+
+                <!-- Gradient background -->
+                <Setter Property="Background">
+                    <Setter.Value>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#8B0000" Offset="0.1"/>
+                            <!-- Dark red -->
+                            <GradientStop Color="#A52A2A" Offset="1.0"/>
+                            <!-- Brownish red -->
+                        </LinearGradientBrush>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+
+
+
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

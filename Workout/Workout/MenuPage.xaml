@@ -1,0 +1,638 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:skia="clr-namespace:SkiaSharp.Views.Maui.Controls;assembly=SkiaSharp.Views.Maui.Controls"
+             xmlns:controls="clr-namespace:Workout"
+             x:Class="Workout.MenuPage">
+
+    <ContentPage.Resources>
+        <Style x:Key="TabStyle" TargetType="StackLayout">
+            <Setter Property="Orientation" Value="Vertical" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="Spacing" Value="2" />
+            <Setter Property="WidthRequest" Value="50" />
+        </Style>
+
+        <Style x:Key="KovetkezoButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Red" />
+            <Setter Property="TextColor" Value="Black" />
+            <Setter Property="FontSize" Value="30" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="Margin" Value="10,10" />
+            <Setter Property="Padding" Value="10,10" />
+            <Setter Property="HeightRequest" Value="70" />
+            <Setter Property="WidthRequest" Value="250" />
+            <Setter Property="Shadow">
+                <Shadow Brush="Black" Offset="0,5" Opacity="0.5" Radius="10" />
+            </Setter>
+        </Style>
+
+        <Style x:Key="HomeTabStyle" TargetType="StackLayout" BasedOn="{StaticResource TabStyle}">
+            <Setter Property="WidthRequest" Value="60" />
+            <Setter Property="Spacing" Value="-5" />
+        </Style>
+
+        <!-- Napok gombjainak stílusa -->
+        <Style x:Key="CalendarButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="Transparent"/>
+            <Setter Property="TextColor" Value="#333"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="BorderColor" Value="#ccc"/>
+            <Setter Property="CornerRadius" Value="10"/>
+            <Setter Property="HeightRequest" Value="40"/>
+            <Setter Property="WidthRequest" Value="100"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+        <Style x:Key="ActiveDayButtonStyle" TargetType="Button" BasedOn="{StaticResource CalendarButtonStyle}">
+            <Setter Property="BackgroundColor" Value="Brown"/>
+            <Setter Property="TextColor" Value="White"/>
+        </Style>
+
+        <Style x:Key="DayButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="LightGray"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="WidthRequest" Value="45"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="CornerRadius" Value="0"/>
+            <!-- Eltávolítja a kerekítést -->
+            <Setter Property="BorderColor" Value="Black"/>
+            <!-- Fekete keret színe -->
+            <Setter Property="BorderWidth" Value="1"/>
+            <!-- Keret vastagsága -->
+        </Style>
+
+        <Style x:Key="TodayButtonStyle" TargetType="Button" BasedOn="{StaticResource DayButtonStyle}">
+            <Setter Property="BackgroundColor" Value="Orange"/>
+        </Style>
+
+        <Style x:Key="InactiveDayButtonStyle" TargetType="Button" BasedOn="{StaticResource DayButtonStyle}">
+            <Setter Property="BackgroundColor" Value="LightGray"/>
+            <Setter Property="TextColor" Value="DarkGray"/>
+        </Style>
+
+        <Style x:Key="TrainDayButtonStyle" TargetType="Button" BasedOn="{StaticResource DayButtonStyle}">
+            <Setter Property="BackgroundColor" Value="IndianRed"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BorderColor" Value="red"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="CornerRadius" Value="8"/>
+            <Setter Property="BorderColor" Value="Black"/>
+        </Style>
+
+        <Style x:Key="TodayTrainDayButtonStyle" TargetType="Button" BasedOn="{StaticResource TrainDayButtonStyle}">
+            <Setter Property="BackgroundColor" Value="DarkOrange"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+        </Style>
+
+        <Style x:Key="InactiveTrainDayButtonStyle" TargetType="Button" BasedOn="{StaticResource TrainDayButtonStyle}">
+            <Setter Property="BackgroundColor" Value="LightCoral"/>
+            <Setter Property="TextColor" Value="DarkRed"/>
+        </Style>
+
+
+        <Style x:Key="WeekDayButton" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="White"/>
+            <Setter Property="TextColor" Value="Black"/>
+            <Setter Property="HeightRequest" Value="70"/>
+            <Setter Property="WidthRequest" Value="45"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="CornerRadius" Value="5"/>
+            <Setter Property="Padding" Value="5,0"/>
+            <Setter Property="HorizontalOptions" Value="StartAndExpand"/>
+            <Setter Property="VerticalOptions" Value="FillAndExpand"/>
+            <Setter Property="BorderWidth" Value="1"/>
+            <Setter Property="BorderColor" Value="Black"/>
+        </Style>
+
+        <Style x:Key="WeekTodayButtonStyle" TargetType="Button" BasedOn="{StaticResource WeekDayButton}">
+            <Setter Property="BackgroundColor" Value="Orange"/>
+        </Style>
+
+        <Style x:Key="TrainWeekDayButton" TargetType="Button" BasedOn="{StaticResource WeekDayButton}">
+            <Setter Property="BackgroundColor" Value="IndianRed"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BorderColor" Value="Black"/>
+        </Style>
+
+        <Style x:Key="TrainWeekTodayButtonStyle" TargetType="Button" BasedOn="{StaticResource WeekTodayButtonStyle}">
+            <Setter Property="BackgroundColor" Value="DarkOrange"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="BorderColor" Value="Black"/>
+        </Style>
+
+
+        <Style x:Key="ProfilBaseLabelStyle" TargetType="Label">
+            <Setter Property="TextColor" Value="IndianRed"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+        <Style x:Key="ProfilHeaderLabelStyle" TargetType="Label" BasedOn="{StaticResource ProfilBaseLabelStyle}">
+            <Setter Property="FontSize" Value="20"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="TextColor" Value="IndianRed"/>
+        </Style>
+        <Style x:Key="ProfileButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="IndianRed"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="HeightRequest" Value="50"/>
+            <Setter Property="CornerRadius" Value="25"/>
+            <Setter Property="Margin" Value="10"/>
+        </Style>
+
+
+        <Style x:Key="LabelStyle" TargetType="Label">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="HorizontalTextAlignment" Value="Center" />
+            <Setter Property="VerticalTextAlignment" Value="Center" />
+            <Setter Property="Margin" Value="0,5,0,5" />
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+        <!-- Define a style for the date label -->
+        <Style x:Key="DateLabelStyle" TargetType="Label" BasedOn="{StaticResource LabelStyle}">
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="FontAttributes" Value="Bold" />
+            <Setter Property="TextColor" Value="IndianRed" />
+        </Style>
+        <!-- Define a style for the summary label -->
+        <Style x:Key="SummaryLabelStyle" TargetType="Label" BasedOn="{StaticResource LabelStyle}">
+            <Setter Property="FontSize" Value="18" />
+            <Setter Property="TextColor" Value="White" />
+        </Style>
+        <!-- Define a style for the frame -->
+        <Style x:Key="FrameStyle" TargetType="Frame">
+            <Setter Property="Padding" Value="20" />
+            <Setter Property="HorizontalOptions" Value="Center" />
+            <Setter Property="VerticalOptions" Value="Center" />
+            <Setter Property="BackgroundColor" Value="Black" />
+            <Setter Property="CornerRadius" Value="20" />
+            <Setter Property="HasShadow" Value="True" />
+            <Setter Property="Margin" Value="0,50,0,100" />
+            <Setter Property="WidthRequest" Value="350" />
+        </Style>
+
+        <Style x:Key="TransferButtonStyle" TargetType="Button">
+            <Setter Property="BackgroundColor" Value="IndianRed"/>
+            <Setter Property="TextColor" Value="White"/>
+            <Setter Property="FontAttributes" Value="Bold"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="CornerRadius" Value="20"/>
+            <Setter Property="BorderColor" Value="White"/>
+            <Setter Property="BorderWidth" Value="2"/>
+            <Setter Property="HeightRequest" Value="45"/>
+            <Setter Property="WidthRequest" Value="200"/>
+            <Setter Property="Margin" Value="5"/>
+        </Style>
+
+    </ContentPage.Resources>
+    <Grid x:Name="MainGrid">
+        <AbsoluteLayout>
+            <ScrollView AbsoluteLayout.LayoutBounds="0,0,1,1"
+                    AbsoluteLayout.LayoutFlags="All">
+                <Grid>
+
+                    <Grid VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <VerticalStackLayout Grid.Row="0">
+
+                            <ContentView x:Name="CalendarView" IsVisible="false">
+                                <VerticalStackLayout HorizontalOptions="Center" VerticalOptions="Start">
+                                    <!-- Fejléc Gombok, a Frame-en kívül -->
+                                    <HorizontalStackLayout HorizontalOptions="Center" VerticalOptions="Center" Margin="0,20,0,0">
+                                        <Button x:Name="WeeklyViewButton" Text="Hét" Style="{StaticResource ActiveDayButtonStyle}" Clicked="Hetre" />
+                                        <Button x:Name="MonthlyViewButton" Text="Hónap" Style="{StaticResource CalendarButtonStyle}" Clicked="Honapra" />
+                                    </HorizontalStackLayout>
+                                    <HorizontalStackLayout x:Name="NaptarMozgato" HorizontalOptions="Center" VerticalOptions="Center" Margin="0,10,0,0" IsVisible="false">
+                                        <Grid>
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <Frame BackgroundColor="IndianRed" Grid.Column="0" HeightRequest="40" WidthRequest="50" BorderColor="White" Margin="0,0,2,0">
+                                                <Image Source="arrow.png" HeightRequest="30" WidthRequest="50">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="bal"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </Frame>
+
+                                            <Frame BackgroundColor="IndianRed" HeightRequest="40" WidthRequest="50" Grid.Column="1" BorderColor="White">
+                                                <Image Source="arrow.png" HeightRequest="30" WidthRequest="50" ScaleX="-1">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="jobb"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </Frame>
+                                        </Grid>
+
+                                    </HorizontalStackLayout>
+
+                                    <!-- Frame a naptár napokkal, a fejléc gombok alatt -->
+                                    <Frame x:Name="Naptar" Padding="10" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="Red" IsVisible="false">
+                                        <Grid x:Name="NaptarGrid" RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto,Auto,Auto" ColumnDefinitions="*,*,*,*,*,*,*" RowSpacing="0">
+
+                                        </Grid>
+                                    </Frame>
+                                    <Frame x:Name="HetTablazat" Padding="10" HorizontalOptions="Center" VerticalOptions="Start" BackgroundColor="Red" IsVisible="true" Margin="0,20,0,0">
+                                        <Grid x:Name="HetGrid" RowDefinitions="Auto" ColumnDefinitions="*,*,*,*,*,*,*" RowSpacing="0" ColumnSpacing="3">
+
+                                        </Grid>
+                                    </Frame>
+                                    <Button x:Name="atrakasEdzesTerv" Text="EdzesNap átrakása" IsVisible="false" Clicked="EdzesNapAtrakasa" BackgroundColor="IndianRed" TextColor="White" FontAttributes="Bold" FontSize="16" CornerRadius="20" BorderColor="White" BorderWidth="2" WidthRequest="200" HeightRequest="50" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <ScrollView Grid.Row="0">
+                                            <Frame x:Name="edzesLeirasa" Style="{StaticResource FrameStyle}" IsVisible="true">
+                                                <StackLayout x:Name="EdzesLeirasOsszefogalalo" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
+                                                    <!-- Dátum Label -->
+                                                    <Label x:Name="DatumLabel" Text="" Style="{StaticResource DateLabelStyle}" />
+                                                    <!-- Összefoglaló Label -->
+                                                    <Label x:Name="OsszefoglaloLabel" Text="" Style="{StaticResource SummaryLabelStyle}" />
+                                                </StackLayout>
+                                            </Frame>
+                                        </ScrollView>
+
+                                        <ScrollView Grid.Row="0">
+                                            <Frame x:Name="Atrakasgombok" Style="{StaticResource FrameStyle}" IsVisible="false">
+                                                <StackLayout x:Name="atrakasGombokTarolo" Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="Center" Spacing="20">
+                                                    <!-- Áthelyezési gombok ide kerülnek -->
+                                                </StackLayout>
+                                            </Frame>
+                                        </ScrollView>
+                                    </Grid>
+                                </VerticalStackLayout>
+
+                            </ContentView>
+
+
+                            <ContentView x:Name="staticView" IsVisible="false">
+                                <ScrollView>
+                                    <StackLayout Padding="20" Spacing="10">
+                                        <!-- Címsor animációval -->
+                                        <StackLayout>
+                                            <Label Text="Napi Statisztika" FontSize="24" TextColor="IndianRed" HorizontalOptions="Center">
+                                            </Label>
+                                        </StackLayout>
+
+                                        <Grid ColumnDefinitions="*,*" RowDefinitions="*,*">
+
+                                            <!-- Edzés időtartama animációval -->
+                                            <Frame BackgroundColor="Red" Padding="10" CornerRadius="10" Margin="5" Grid.Row="0" Grid.Column="0">
+                                                <StackLayout>
+                                                    <Label Text="Edzés Időtartama" FontSize="20" TextColor="White" HorizontalOptions="Center"/>
+                                                    <Label Text="Ma összesen: 60 perc" FontSize="18" TextColor="White" HorizontalOptions="Center"/>
+                                                </StackLayout>
+                                            </Frame>
+
+                                            <!-- Kalóriaégetés animációval -->
+                                            <Frame BackgroundColor="IndianRed" Padding="10" CornerRadius="10" Margin="5" Grid.Row="0" Grid.Column="1">
+                                                <StackLayout>
+                                                    <Label Text="Kalóriaégetés" FontSize="20" TextColor="White" HorizontalOptions="Center"/>
+                                                    <Label Text="Ma elégetett kalóriák: 500 kcal" FontSize="18" TextColor="White" HorizontalOptions="Center"/>
+                                                </StackLayout>
+                                            </Frame>
+
+                                            <!-- Lépésszám animációval -->
+                                            <Frame BackgroundColor="Brown" Padding="10" CornerRadius="10" Margin="5" Grid.Row="1" Grid.Column="0">
+                                                <StackLayout>
+                                                    <Label Text="Lépésszám" FontSize="20" TextColor="White" HorizontalOptions="Center"/>
+                                                    <Label Text="Mai lépések: 10,000" FontSize="18" TextColor="White" HorizontalOptions="Center"/>
+                                                </StackLayout>
+                                            </Frame>
+
+                                            <!-- Vízfogyasztás animációval -->
+                                            <Frame BackgroundColor="NavajoWhite" Padding="10" CornerRadius="10" Margin="5" Grid.Row="1" Grid.Column="1">
+                                                <StackLayout>
+                                                    <Label Text="Vízfogyasztás" FontSize="20" TextColor="Black" HorizontalOptions="Center"/>
+                                                    <Label Text="Ma elfogyasztott: 2 liter" FontSize="18" TextColor="Black" HorizontalOptions="Center"/>
+                                                </StackLayout>
+                                            </Frame>
+                                        </Grid>
+
+                                        <!-- Egyéb Statisztikák -->
+                                        <Frame BackgroundColor="Transparent" Padding="10" CornerRadius="10" Margin="5">
+                                            <StackLayout>
+                                                <Label Text="Egyéb Statisztikák" FontSize="20" TextColor="Black" HorizontalOptions="Center"/>
+                                                <!-- Ide jöhetnek további interaktív és animált elemek -->
+                                            </StackLayout>
+                                        </Frame>
+                                    </StackLayout>
+                                </ScrollView>
+                            </ContentView>
+
+
+
+
+                            <ContentView x:Name="HomeView" IsVisible="true">
+                                <StackLayout IsVisible="true" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                    <!-- Tetején a szint és profil -->
+                                    <StackLayout x:Name="FoMenu" IsVisible="true">
+                                        <Grid VerticalOptions="Start" Padding="10">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*"/>
+                                                <ColumnDefinition Width="Auto"/>
+                                            </Grid.ColumnDefinitions>
+
+                                            <StackLayout Grid.Column="0" Orientation="Horizontal" HorizontalOptions="Start" VerticalOptions="Start">
+
+                                                <!-- Progresszív indikátor -->
+                                                <Grid x:Name="progressContainer" HorizontalOptions="FillAndExpand" VerticalOptions="Center" HeightRequest="20" Margin="10">
+                                                    <!-- Háttér -->
+                                                    <BoxView Color="Gray" VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand" HeightRequest="20" WidthRequest="120">
+                                                        <BoxView.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="LevelShow"/>
+                                                        </BoxView.GestureRecognizers>
+                                                    </BoxView>
+                                                    <!-- Progresszív csík -->
+                                                    <BoxView x:Name="progressBar" Color="Red" HeightRequest="20" WidthRequest="50" HorizontalOptions="Start" VerticalOptions="FillAndExpand">
+                                                        <BoxView.GestureRecognizers>
+                                                            <TapGestureRecognizer Tapped="LevelShow"/>
+                                                        </BoxView.GestureRecognizers>
+                                                    </BoxView>
+
+                                                    <Label x:Name="LevelLabelShow" Text="10 szint" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                                </Grid>
+
+                                                <Image Source="levelicon.png" WidthRequest="50" HeightRequest="50" Margin="-15,0,0,0" Aspect="AspectFill">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="LevelShow" NumberOfTapsRequired="1"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </StackLayout>
+                                        </Grid>
+
+                                        <!-- Középső tartalom -->
+                                        <ScrollView Grid.Column="1">
+                                            <Grid RowDefinitions="Auto" ColumnDefinitions="*,*">
+                                                <Frame BackgroundColor="IndianRed" Padding="15" CornerRadius="10" Margin="10" Grid.Column="0" Grid.Row="0">
+                                                    <Frame.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnMaiEdzestervTapped"/>
+                                                    </Frame.GestureRecognizers>
+                                                    <StackLayout>
+                                                        <Label x:Name="maiNapiEdzes" Text="Mai" TextColor="White" FontAttributes="Bold" FontSize="25"/>
+                                                        <Label x:Name="edzes" Text="edzésterv" TextColor="White"/>
+                                                        <!-- Itt lehet még további tartalmat elhelyezni -->
+                                                    </StackLayout>
+                                                </Frame>
+                                                <Frame BackgroundColor="IndianRed" Padding="15" CornerRadius="10" Margin="10" Grid.Column="1" Grid.Row="0">
+                                                    <Frame.GestureRecognizers>
+                                                        <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnMaiEtrendTapped"/>
+                                                    </Frame.GestureRecognizers>
+                                                    <StackLayout>
+                                                        <Label x:Name="maiNapiKaja" Text="Mai" TextColor="White" FontAttributes="Bold" FontSize="25"/>
+                                                        <Label x:Name="etrend" Text="Etrend" TextColor="White"/>
+                                                    </StackLayout>
+                                                </Frame>
+                                            </Grid>
+                                        </ScrollView>
+
+                                        <StackLayout>
+                                            <Frame x:Name="AdMainTerv" BackgroundColor="IndianRed" Padding="15" CornerRadius="20" Margin="10,30" IsEnabled="True" BorderColor="White" WidthRequest="200" HeightRequest="150">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="EdzesTerKeresTapped" NumberOfTapsRequired="1"/>
+                                                </Frame.GestureRecognizers>
+                                                <Frame.Shadow>
+                                                    <Shadow Brush="Black" Opacity="0.5" Radius="10" Offset="5,5"/>
+                                                </Frame.Shadow>
+                                                <StackLayout>
+                                                    <Label x:Name="AdMainTervText" Text="Shop" TextColor="White" FontAttributes="Bold" FontSize="50" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" />
+                                                </StackLayout>
+                                            </Frame>
+
+                                            <Frame x:Name="rewardFrame" BackgroundColor="IndianRed" Padding="15" CornerRadius="20" Margin="10,30,10,80" IsEnabled="True" BorderColor="Red">
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer NumberOfTapsRequired="1" Tapped="OnRewardTapped"/>
+                                                </Frame.GestureRecognizers>
+                                                <Frame.Shadow>
+                                                    <Shadow Brush="Black" Opacity="0.5" Radius="10" Offset="5,5"/>
+                                                </Frame.Shadow>
+                                                <StackLayout>
+                                                    <Label x:Name="MotivationSzoveg" Text="No pain no gain, No pain no gain" TextColor="White" FontAttributes="Bold" FontSize="25" HorizontalTextAlignment="Center"/>
+                                                </StackLayout>
+                                            </Frame>
+                                        </StackLayout>
+                                    </StackLayout>
+
+                                    <!-- Level mutató -->
+                                    <StackLayout x:Name="levelsLayout" IsVisible="false">
+                                        <!-- Vissza nyil -->
+                                        <ImageButton Source="arrow.png" HorizontalOptions="Start" VerticalOptions="Start" WidthRequest="40" HeightRequest="40" Margin="10" Clicked="LevelShow"/>
+
+
+                                        <StackLayout Orientation="Vertical" Spacing="20" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+                                            <ScrollView x:Name="LevelScroolView"  VerticalOptions="FillAndExpand" HorizontalOptions="FillAndExpand">
+                                                <HorizontalStackLayout Spacing="0">
+                                                    <skia:SKCanvasView x:Name="canvasView" PaintSurface="OnCanvasViewPaintSurface" HeightRequest="10500" WidthRequest="80" VerticalOptions="FillAndExpand" />
+                                                    <skia:SKCanvasView x:Name="canvasViewText" PaintSurface="OnCanvasViewTextPaintSurface" HeightRequest="10500" WidthRequest="320" VerticalOptions="FillAndExpand"/>
+                                                </HorizontalStackLayout>
+                                            </ScrollView>
+                                        </StackLayout>
+
+                                    </StackLayout>
+
+                                    <!-- Shop -->
+                                    <StackLayout x:Name="ShopLayout" IsVisible="false">
+                                        <!-- Vissza nyil -->
+                                        <Frame BackgroundColor="#444444" CornerRadius="30" WidthRequest="40" HeightRequest="40" Margin="5" HorizontalOptions="Start" VerticalOptions="Center">
+                                            <Frame.GestureRecognizers>
+                                                <TapGestureRecognizer Tapped="EdzesTerKeresTapped" NumberOfTapsRequired="1"/>
+                                            </Frame.GestureRecognizers>
+                                            <Image Source="back_arrow.png" Aspect="AspectFit" WidthRequest="35" HeightRequest="35" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </Frame>
+
+                                        <StackLayout x:Name="ShopTermekek">
+
+                                        </StackLayout>
+
+                                    </StackLayout>
+                                    <StackLayout x:Name="longDetailPanel" IsVisible="false" Padding="20" Spacing="10">
+
+                                        <Frame CornerRadius="30" Padding="0" BackgroundColor="Transparent" HasShadow="False">
+                                            <StackLayout Padding="20" Spacing="15" BackgroundColor="White">
+                                                <!-- Profilkép rész -->
+                                                <Grid Padding="10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Profilkép balra -->
+                                                    <StackLayout Grid.Column="0">
+                                                        <Image x:Name="profileAjanlatKep3" Source="profile.png" HeightRequest="150" WidthRequest="150" Aspect="AspectFill" VerticalOptions="Start" HorizontalOptions="Start">
+                                                            <Image.Clip>
+                                                                <EllipseGeometry Center="75,75" RadiusX="75" RadiusY="75" />
+                                                            </Image.Clip>
+                                                        </Image>
+                                                        <Label x:Name="felhasznaloNeve3" Text="Horvath Janos" FontSize="Large" FontAttributes="Bold" TextColor="Black" HorizontalOptions="Center" VerticalOptions="Start" />
+                                                    </StackLayout>
+
+                                                    <!-- Fájlok jobbra, a profilkép mellé -->
+                                                    <StackLayout x:Name="informationFileInOfferSettings2" Orientation="Vertical" HorizontalOptions="EndAndExpand" VerticalOptions="Start" Grid.Column="1" Margin="10,0,0,0">
+                                                        <!-- Fájlok jelennek meg itt -->
+                                                    </StackLayout>
+                                                </Grid>
+
+
+                                                <!-- Név és Ár mezők -->
+                                                <Grid ColumnSpacing="10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <!-- Név Label (Kimenet) -->
+                                                    <Frame Style="{StaticResource ajanlatCimStyleFrame}" Grid.Column="0">
+                                                        <Label x:Name="NameEntry3" Text="Név" FontAttributes="Bold" FontSize="Large" TextColor="#8B4513" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" />
+                                                    </Frame>
+
+                                                    <!-- Ár Label (Kimenet) -->
+                                                    <Frame Style="{StaticResource ajanlatCimStyleFrame}" Grid.Column="1">
+                                                        <Label x:Name="PriceEntry3" Text="Ár" FontAttributes="Bold" FontSize="Large" TextColor="#8B4513" HorizontalTextAlignment="Center" VerticalOptions="CenterAndExpand" />
+                                                    </Frame>
+                                                </Grid>
+
+                                                <!-- Alap kérdések mezők -->
+                                                <StackLayout x:Name="ajanlatTudniValokLongDetailSatcklayout"  Orientation="Vertical"  HorizontalOptions="Start"  VerticalOptions="Start"  Margin="10,0,0,0">
+                                                </StackLayout>
+
+
+                                                <Grid Grid.Row="3" Margin="20, 10">
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="Auto" />
+                                                        <ColumnDefinition Width="*" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <Button x:Name="backBolt" Grid.Column="0" Text="Vissza" Clicked="BackShop" BackgroundColor="IndianRed" TextColor="White" CornerRadius="20" WidthRequest="100" HeightRequest="50" HorizontalOptions="Start"/>
+                                                    <Button x:Name="mehetBolt" Grid.Column="2" Text="Mehet" Clicked="vasarlas" BackgroundColor="Red" TextColor="White" CornerRadius="20" WidthRequest="100" HeightRequest="50" HorizontalOptions="End"/>
+                                                </Grid>
+                                            </StackLayout>
+
+                                        </Frame>
+                                    </StackLayout>
+
+                                    <StackLayout IsVisible="false" x:Name="sideChangeStacklayout">
+                                        <StackLayout IsVisible="true" x:Name="questionPart">
+
+                                        </StackLayout>
+
+                                        <Button Text="következő" Style="{StaticResource KovetkezoButtonStyle}" Clicked="nextSide"/>
+                                    </StackLayout>
+
+
+                                </StackLayout>
+
+                            </ContentView>
+
+
+                            <ContentView x:Name="ProfilView" IsVisible="false">
+                                <ScrollView>
+                                    <StackLayout>
+                                        <StackLayout x:Name="ProfileData" Padding="20" Spacing="10">
+                                            <!-- Profilkép és animáció -->
+                                            <Grid HorizontalOptions="Center" VerticalOptions="Start">
+                                                <!-- Profilkép -->
+                                                <Frame HeightRequest="150" WidthRequest="150" CornerRadius="75" IsClippedToBounds="True">
+                                                    <Image Source="{Binding ProfileImageSource}" HeightRequest="150" WidthRequest="150" Aspect="AspectFill"/>
+                                                </Frame>
+
+                                                <!-- Plusz jel a fehér körben -->
+                                                <Image Source="pluscircle.png" HeightRequest="40" WidthRequest="40" HorizontalOptions="End" VerticalOptions="End" Margin="0,0,10,0">
+                                                    <Image.GestureRecognizers>
+                                                        <TapGestureRecognizer Tapped="OnAddPhotoAddTapped"/>
+                                                    </Image.GestureRecognizers>
+                                                </Image>
+                                            </Grid>
+
+                                            <!-- Nyelvválasztó Gomb -->
+                                            <Button x:Name="languageButton" Text="Jelenlegi Nyelv" Style="{StaticResource ProfileButtonStyle}" Clicked="OnLanguageButtonClicked"/>
+
+                                            <!-- Név -->
+                                            <Label x:Name="ProfilName" Text="Név: Jane Doe" Style="{StaticResource ProfilHeaderLabelStyle}"/>
+
+                                            <!-- Email Cím -->
+                                            <Label x:Name="ProfilEmail" Text="Email: jane.doe@example.com" Style="{StaticResource ProfilBaseLabelStyle}"/>
+
+                                            <!-- Születési Dátum -->
+                                            <Label x:Name="ProfilDate" Text="Születési Dátum: 1985. Március 15." Style="{StaticResource ProfilBaseLabelStyle}"/>
+
+                                            <!-- Egyedi Animációhoz -->
+                                            <BoxView HeightRequest="2" HorizontalOptions="Fill" Margin="0,10"/>
+                                            <Button x:Name="logoutButton" Text="Kijelentkezés" Clicked="Logout" Margin="0,0,0,50"/>
+                                        </StackLayout>
+                                        <StackLayout x:Name="NyelvOpciok" IsVisible="False" BackgroundColor="Transparent" HorizontalOptions="FillAndExpand" VerticalOptions="Center">
+                                            <Frame BackgroundColor="Brown" Padding="0" CornerRadius="20" HorizontalOptions="Center" VerticalOptions="Center" WidthRequest="300" Margin="20" HasShadow="True">
+                                                <StackLayout>
+                                                    <!-- Bezáró X gomb a jobb felső sarokban -->
+                                                    <Button Text="X" Clicked="OnLanguageButtonClicked" BackgroundColor="Transparent" TextColor="White" HorizontalOptions="End" Margin="10"/>
+
+                                                    <!-- Nyelvi opciók -->
+                                                    <StackLayout Padding="20" Spacing="10">
+                                                        <Button x:Name="English" Text="English" BackgroundColor="RosyBrown" TextColor="White" Margin="5" Clicked="OnOptionSelected"/>
+                                                        <Button x:Name="Magyar" Text="Magyar" BackgroundColor="RosyBrown" TextColor="White" Margin="5" Clicked="OnOptionSelected"/>
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </Frame>
+                                        </StackLayout>
+                                    </StackLayout>
+                                </ScrollView>
+                            </ContentView>
+
+
+                        </VerticalStackLayout>
+                    </Grid>
+                </Grid>
+            </ScrollView>
+
+            <StackLayout x:Name="Alkalmazas" IsVisible="false" VerticalOptions="CenterAndExpand" HorizontalOptions="FillAndExpand" BackgroundColor="Red" Padding="20">
+                <Label Text="Alkalmazás fejlesztés alatt!" HorizontalTextAlignment="Center" VerticalTextAlignment="Center" FontSize="Large" TextColor="White" Margin="0, 20"/>
+                <ActivityIndicator IsRunning="False" Color="Red"/>
+            </StackLayout>
+        </AbsoluteLayout>
+
+        <controls:MessageView x:Name="MessageView" IsVisible="True" />
+        <!-- Alsó navigációs menü -->
+        <controls:BottomNavMenu 
+             x:Name="MyBottomNav"
+             AbsoluteLayout.LayoutBounds="0,1,1,70"
+             AbsoluteLayout.LayoutFlags="WidthProportional, YProportional"
+
+             Icon1="calendar.png"
+             Text1="Naptár"
+             Command1="{Binding CalendarNavCommand}"
+    
+             Icon2="stats.png"
+             Text2="Ajánlat"
+             Command2="{Binding StatsNavCommand}"
+    
+             Icon3="home.png"
+             Text3="Home"
+             Command3="{Binding HomeNavCommand}"
+    
+             Icon4="profile.png"
+             Text4="Profil"
+             Command4="{Binding ProfileNavCommand}"
+    
+             Icon5="message.png"
+             Text5="Üzenet"
+             Command5="{Binding MessageNavCommand}"
+         />
+
+        <ContentView x:Name="ForgoKerekP" IsVisible="false" BackgroundColor="Black" Opacity="0.8" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand">
+            <StackLayout HorizontalOptions="Center" VerticalOptions="CenterAndExpand">
+                <Image x:Name="ForgoKep" Source="leadingcircle.png" WidthRequest="100" HeightRequest="100"/>
+            </StackLayout>
+        </ContentView>
+    </Grid>
+</ContentPage>
